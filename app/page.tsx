@@ -50,7 +50,7 @@ export default function Home() {
           {/* Main Heading */}
           <div className="space-y-4">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-800 bg-clip-text text-transparent animate-fade-in">
-              We <a href=""></a>re Building Something Amazing
+              We're Building Something Amazing
             </h1>
             <div className="flex items-center justify-center gap-2 text-lg md:text-xl text-muted-foreground">
               <span className="animate-typing font-medium">Quality Assurance as a Service</span>
