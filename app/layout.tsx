@@ -2,6 +2,8 @@ import type React from "react"
 import "@/app/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Outfit } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next" // Import Vercel Analytics
+import { Suspense } from "react" // Import Suspense
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -74,9 +76,14 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+        <Suspense fallback={null}>
+          {" "}
+          {/* Wrap with Suspense */}
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+            {children}
+            <Analytics /> {/* Vercel Analytics Component */}
+          </ThemeProvider>
+        </Suspense>
       </body>
     </html>
   )
