@@ -5,6 +5,7 @@ import Image from "next/image"
 import { ContactForm } from "@/components/contact-form"
 import { EmailModalForm } from "@/components/email-modal-form"
 import { Analytics } from "@vercel/analytics/react"
+import Link from "next/link" // Import Link for navigation
 
 export default function LandingPage() {
   const isUnderConstruction = process.env.NEXT_PUBLIC_UNDER_CONSTRUCTION === "true"
@@ -52,29 +53,25 @@ export default function LandingPage() {
         <nav>
           <ul className="flex space-x-6">
             <li>
-              <a href="#services" className="text-lg font-medium hover:text-primary transition-colors">
+              <Link href="#services" className="text-lg font-medium hover:text-primary transition-colors">
                 Services
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#process" className="text-lg font-medium hover:text-primary transition-colors">
+              <Link href="#process" className="text-lg font-medium hover:text-primary transition-colors">
                 Process
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#benefits" className="text-lg font-medium hover:text-primary transition-colors">
+              <Link href="#benefits" className="text-lg font-medium hover:text-primary transition-colors">
                 Benefits
-              </a>
+              </Link>
             </li>
+            {/* Testimonials link removed */}
             <li>
-              <a href="#testimonials" className="text-lg font-medium hover:text-primary transition-colors">
-                Testimonials
-              </a>
-            </li>
-            <li>
-              <a href="#contact" className="text-lg font-medium hover:text-primary transition-colors">
+              <Link href="#contact" className="text-lg font-medium hover:text-primary transition-colors">
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
@@ -339,54 +336,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section id="testimonials" className="py-16 px-8 bg-white dark:bg-gray-800 animate-fade-in">
-        <h3 className="text-4xl font-bold text-center text-primary mb-12">What Our Clients Say</h3>
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-left">
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300 italic mb-4">
-                &quot;DovoQA transformed our development pipeline. Their flat-rate model and unlimited resources are a
-                game-changer. We&apos;ve never had such predictable quality assurance.&quot;
-              </p>
-              <div className="flex items-center">
-                <Image
-                  src="/placeholder-user.jpg"
-                  alt="Client Avatar"
-                  width={56}
-                  height={56}
-                  className="rounded-full mr-4"
-                />
-                <div>
-                  <p className="font-semibold text-primary">Jane Doe</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">CTO, Tech Solutions Inc.</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-right">
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300 italic mb-4">
-                &quot;The flexibility and expertise of DovoQA&apos;s team are unmatched. They seamlessly integrated with
-                our agile process and significantly improved our software&apos;s stability.&quot;
-              </p>
-              <div className="flex items-center">
-                <Image
-                  src="/placeholder-user.jpg"
-                  alt="Client Avatar"
-                  width={56}
-                  height={56}
-                  className="rounded-full mr-4"
-                />
-                <div>
-                  <p className="font-semibold text-primary">John Smith</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Product Manager, Innovate Co.</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+      {/* Testimonials Section removed */}
 
       {/* Contact Section */}
       <section
