@@ -56,7 +56,8 @@ export default function DovoQABrochureES() {
         <section className="mb-8">
           <h2 className="text-3xl font-bold text-primary mb-4">Acerca de DovoQA</h2>
           <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-            DovoQA es un proveedor de Aseguramiento de Calidad como Servicio (QAaaS), dedicado a ayudar a las empresas a entregar software de alta calidad y sin errores. Ofrecemos un modelo único de tarifa plana anual, que proporciona costos predecibles y recursos prácticamente ilimitados para adaptarse a las necesidades cambiantes de su proyecto. Nuestro equipo de expertos se integra perfectamente con su ciclo de desarrollo, permitiéndole centrarse en la innovación mientras nosotros garantizamos una calidad superior.
+            Somos proveedores de servicios que complementamos el desarrollo de software, identificando problemas de calidad y errores de desarrollo, permitiendo lograr un producto robusto y confiable, cumpliendo con los más altos estándares que el mercado requiere. Contamos con la experiencia necesaria, para optimizar la utilizacion de los recursos tanto humanos como tecnologicos, que nos permiten adaptarnos a las necesidades de cada proyecto y garantizar resultados excepcionales.
+            {/* DovoQA es un proveedor de Aseguramiento de Calidad como Servicio (QAaaS), dedicado a ayudar a las empresas a entregar software de alta calidad y sin errores. Ofrecemos un modelo único de tarifa plana anual, que proporciona costos predecibles y recursos prácticamente ilimitados para adaptarse a las necesidades cambiantes de su proyecto. Nuestro equipo de expertos se integra perfectamente con su ciclo de desarrollo, permitiéndole centrarse en la innovación mientras nosotros garantizamos una calidad superior. */}
           </p>
         </section>
 
@@ -129,9 +130,9 @@ export default function DovoQABrochureES() {
         <section className="mb-8">
           <h2 className="text-3xl font-bold text-primary mb-6">Tecnologías y Metodologías</h2>
           <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-            En DovoQA, aprovechamos tecnologías de vanguardia y nos adherimos a las mejores metodologías de la industria
-            para ofrecer un aseguramiento de calidad superior. Nuestro enfoque está diseñado para integrarse sin
-            problemas con sus pipelines de desarrollo, garantizando eficiencia, fiabilidad y una cobertura exhaustiva.
+            Aprovechamos tecnologías de vanguardia y nos adherimos a las mejores metodologías de la industria
+            para ofrecer resultados con una calidad superior. Nuestro enfoque está diseñado para integrarse sin
+            fricciones con sus pipelines de desarrollo, garantizando eficiencia, fiabilidad y una cobertura exhaustiva.
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="flex items-start space-x-4">
@@ -179,7 +180,7 @@ export default function DovoQABrochureES() {
 
         {/* Benefits */}
         <section className="mb-8">
-          <h2 className="text-3xl font-bold text-primary mb-6">Beneficios de Asociarse con DovoQA</h2>
+          <h2 className="text-3xl font-bold text-primary mb-6">Beneficios de Asociarse con Nosotros</h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="flex items-start space-x-4">
               <DollarSign className="h-8 w-8 text-primary flex-shrink-0" />
@@ -206,7 +207,7 @@ export default function DovoQABrochureES() {
               <div>
                 <h3 className="text-xl font-semibold">Experiencia a Demanda</h3>
                 <p className="text-gray-700 dark:text-gray-300">
-                  Acceda a un equipo de profesionales de QA experimentados sin los gastos generales de la contratación
+                  Acceda a un equipo de profesionales en Calidad experimentados sin los costos generales de la contratación
                   interna.
                 </p>
               </div>
@@ -227,7 +228,7 @@ export default function DovoQABrochureES() {
         <section className="text-center py-8 bg-gray-100 dark:bg-gray-850 rounded-lg">
           <h2 className="text-3xl font-bold text-primary mb-4">Contáctenos</h2>
           <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
-            ¿Listo para elevar la calidad de su software? ¡Contáctenos hoy!
+            ¿Listo para elevar la calidad de su producto? ¡Contáctenos hoy!
           </p>
           <div className="flex flex-col items-center space-y-2">
             <p className="flex items-center space-x-2 text-lg">
