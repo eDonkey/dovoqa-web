@@ -240,7 +240,7 @@ export default function DovoQABrochureES() {
             </p>
             <p className="flex items-center space-x-2 text-lg">
               <Phone className="h-6 w-6 text-secondary" />
-              <span>+54-9-11-3234-6592</span>
+              <span>+54 9 11 3234-6592</span>
             </p>
           </div>
         </section>
