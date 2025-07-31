@@ -1,156 +1,282 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import Image from "next/image"
-import { CheckCircle, DollarSign, Scale, Phone, Mail, Globe } from "lucide-react"
+"use client"
 
-export default function DovoQABrochureEN() {
+import Image from "next/image"
+import { Mail, Phone, ShieldCheck, DollarSign, Scale, CheckCircle } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+
+export default function DovoqaBrochureEn() {
   return (
-    <div className="font-sans bg-gradient-to-br from-primary to-secondary-foreground text-white min-h-screen p-8">
-      <div className="max-w-4xl mx-auto bg-white text-gray-800 rounded-lg shadow-2xl overflow-hidden">
-        {/* Header Section */}
-        <div className="relative h-64 bg-gradient-to-r from-primary to-secondary flex items-center justify-center p-6">
+    <div className="font-sans bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 min-h-screen p-8">
+      {/* Header */}
+      <header className="flex items-center justify-between py-6 px-8 bg-white dark:bg-gray-800 shadow-md rounded-lg mb-8">
+        <div className="flex items-center space-x-4">
+          <Image src="/placeholder-logo.svg" alt="DovoQA Logo" width={60} height={60} className="rounded-full" />
+          <h1 className="text-3xl font-bold text-primary">DovoQA</h1>
+        </div>
+        <nav>
+          <ul className="flex space-x-6">
+            <li>
+              <a href="#services" className="text-lg font-medium hover:text-primary transition-colors">
+                Services
+              </a>
+            </li>
+            <li>
+              <a href="#benefits" className="text-lg font-medium hover:text-primary transition-colors">
+                Benefits
+              </a>
+            </li>
+            <li>
+              <a href="#contact" className="text-lg font-medium hover:text-primary transition-colors">
+                Contact
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-r from-primary to-teal-600 text-white py-20 px-8 rounded-lg shadow-xl mb-12 overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
           <Image
-            src="/placeholder-logo.svg"
-            alt="DovoQA Logo"
-            width={150}
-            height={150}
-            className="absolute top-6 left-6"
-          />
-          <div className="text-center">
-            <h1 className="text-5xl font-extrabold tracking-tight text-white drop-shadow-lg">DovoQA</h1>
-            <p className="mt-2 text-xl font-light text-white/90">Your Partner in Quality Assurance</p>
-            <p className="mt-1 text-lg font-light text-white/80">Unlocking Flawless Software, Predictably.</p>
-          </div>
-          <Image
-            src="/placeholder.svg?height=200&width=300"
-            alt="Abstract background pattern"
+            src="/placeholder.jpg?query=abstract-geometric-pattern"
+            alt="Background Pattern"
             layout="fill"
             objectFit="cover"
-            className="absolute inset-0 opacity-20 z-0"
+            quality={100}
           />
         </div>
-
-        {/* Introduction */}
-        <section className="p-8 text-center bg-gray-50">
-          <h2 className="text-3xl font-bold text-primary mb-4">Redefining Quality Assurance</h2>
-          <p className="text-lg leading-relaxed text-gray-700">
-            At DovoQA, we redefine Quality Assurance by offering a comprehensive **QA as a Service** model designed to
-            integrate seamlessly with your development lifecycle. We focus on delivering exceptional quality, allowing
-            you to concentrate on innovation.
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          <h2 className="text-5xl font-extrabold mb-6 leading-tight">Elevate Your Software Quality with DovoQA</h2>
+          <p className="text-xl mb-8 opacity-90">
+            Your dedicated QA partner, ensuring flawless software delivery with unparalleled flexibility and predictable
+            costs.
           </p>
-        </section>
-
-        {/* Key Differentiators */}
-        <section className="p-8 grid md:grid-cols-3 gap-8 bg-white">
-          <Card className="text-center p-6 shadow-md hover:shadow-lg transition-shadow duration-300 border-t-4 border-primary">
-            <CardHeader>
-              <DollarSign className="mx-auto h-12 w-12 text-primary mb-4" />
-              <CardTitle className="text-2xl font-semibold text-gray-900">Flat-Rate Pricing</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700">
-                Say goodbye to unpredictable costs. Our annual flat-rate model ensures you pay a fixed price, regardless
-                of the time or resources required. This means complete budget predictability and no hidden fees.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="text-center p-6 shadow-md hover:shadow-lg transition-shadow duration-300 border-t-4 border-secondary">
-            <CardHeader>
-              <Scale className="mx-auto h-12 w-12 text-secondary mb-4" />
-              <CardTitle className="text-2xl font-semibold text-gray-900">Virtually Unlimited Resources</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700">
-                Scale your QA efforts effortlessly. We adapt to your project's evolving needs, providing the right
-                amount of resources at every stage, from initial development to post-launch maintenance, all without
-                changing your billing.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="text-center p-6 shadow-md hover:shadow-lg transition-shadow duration-300 border-t-4 border-primary">
-            <CardHeader>
-              <CheckCircle className="mx-auto h-12 w-12 text-primary mb-4" />
-              <CardTitle className="text-2xl font-semibold text-gray-900">Unmatched Adaptability</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700">
-                Our flexible approach ensures that as your project grows or pivots, our QA support scales with you,
-                providing continuous, high-quality testing without impacting your budget.
-              </p>
-            </CardContent>
-          </Card>
-        </section>
-
-        {/* Our Services */}
-        <section className="p-8 bg-gray-50">
-          <h2 className="text-3xl font-bold text-center text-primary mb-6">Our Comprehensive Services</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              "Functional Testing",
-              "Performance Testing",
-              "Automation Testing",
-              "Security Testing",
-              "Usability Testing",
-              "Consulting & Strategy",
-            ].map((service, index) => (
-              <div key={index} className="flex items-center space-x-3 bg-white p-4 rounded-md shadow-sm">
-                <CheckCircle className="h-6 w-6 text-secondary flex-shrink-0" />
-                <span className="text-lg font-medium text-gray-800">{service}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Benefits of Partnering */}
-        <section className="p-8 bg-white">
-          <h2 className="text-3xl font-bold text-center text-primary mb-6">Benefits of Partnering with DovoQA</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              "Cost Predictability: Fixed annual fee eliminates budget surprises.",
-              "Scalability & Flexibility: Resources adjust to your project's demands.",
-              "Expertise On-Demand: Access to seasoned QA professionals.",
-              "Faster Time-to-Market: Streamlined QA processes accelerate delivery.",
-              "Enhanced Product Quality: Deliver robust, bug-free software.",
-              "Focus on Core Business: Let us handle QA, so you can innovate.",
-            ].map((benefit, index) => (
-              <div key={index} className="flex items-start space-x-3">
-                <CheckCircle className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                <p className="text-lg text-gray-700">{benefit}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Call to Action */}
-        <section className="p-8 text-center bg-gradient-to-r from-primary to-secondary text-white">
-          <h2 className="text-3xl font-bold mb-4">Ready to Transform Your QA?</h2>
-          <p className="text-xl mb-6">Contact us today for a personalized consultation!</p>
-          <Button className="bg-white text-primary hover:bg-gray-100 text-lg px-8 py-3 rounded-full shadow-lg transition-all duration-300">
+          <Button className="bg-secondary text-white hover:bg-secondary/90 text-lg px-8 py-4 rounded-full shadow-lg transition-transform transform hover:scale-105">
             Get a Free Consultation
           </Button>
-        </section>
+        </div>
+      </section>
 
-        {/* Footer */}
-        <footer className="p-8 bg-gray-800 text-gray-300 text-center text-sm">
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-4">
-            <div className="flex items-center space-x-2">
-              <Globe className="h-5 w-5" />
-              <span>dovoqa.com</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Mail className="h-5 w-5" />
-              <span>info@dovoqa.com</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Phone className="h-5 w-5" />
-              <span>+1 (555) 123-4567</span>
-            </div>
-          </div>
-          <p>&copy; {new Date().getFullYear()} DovoQA. All rights reserved.</p>
-        </footer>
-      </div>
+      {/* Why DovoQA? Section - Unique Selling Propositions */}
+      <section className="py-16 px-8 bg-white dark:bg-gray-800 rounded-lg shadow-md mb-12">
+        <h3 className="text-4xl font-bold text-center text-primary mb-12">Why Choose DovoQA? Our Unique Difference</h3>
+        <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+          <Card className="text-center p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <ShieldCheck className="h-16 w-16 text-primary mx-auto mb-4" />
+              <CardTitle className="text-2xl font-semibold mb-2">QA as a Service</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Focus on your core business while we handle all your Quality Assurance needs. Our expert team integrates
+                seamlessly with your development cycle.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="text-center p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <DollarSign className="h-16 w-16 text-primary mx-auto mb-4" />
+              <CardTitle className="text-2xl font-semibold mb-2">Flat Rate, Predictable Costs</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Enjoy a flat annual rate, regardless of the time or resources required. No surprises, just clear,
+                consistent billing for your budget.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="text-center p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <Scale className="h-16 w-16 text-primary mx-auto mb-4" />
+              <CardTitle className="text-2xl font-semibold mb-2">
+                Virtually Unlimited Resources & Adaptability
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Access a vast pool of QA talent. We adapt our resources to your project's evolving stages, ensuring
+                optimal support without affecting your billing.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Our Services Section */}
+      <section id="services" className="py-16 px-8 bg-gray-100 dark:bg-gray-850 rounded-lg shadow-md mb-12">
+        <h3 className="text-4xl font-bold text-center text-primary mb-12">Our Comprehensive QA Services</h3>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <CheckCircle className="h-10 w-10 text-secondary mb-4" />
+              <CardTitle className="text-xl font-semibold">Functional Testing</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Ensuring every feature works exactly as intended, meeting all specified requirements.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <CheckCircle className="h-10 w-10 text-secondary mb-4" />
+              <CardTitle className="text-xl font-semibold">Performance Testing</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Verifying application responsiveness, stability, and scalability under various loads.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <CheckCircle className="h-10 w-10 text-secondary mb-4" />
+              <CardTitle className="text-xl font-semibold">Security Testing</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Identifying vulnerabilities and protecting your software from potential threats.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <CheckCircle className="h-10 w-10 text-secondary mb-4" />
+              <CardTitle className="text-xl font-semibold">Automation Testing</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Developing robust automated test suites for faster, more efficient regression cycles.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <CheckCircle className="h-10 w-10 text-secondary mb-4" />
+              <CardTitle className="text-xl font-semibold">Usability Testing</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Evaluating user-friendliness and overall user experience to ensure intuitive interfaces.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <CheckCircle className="h-10 w-10 text-secondary mb-4" />
+              <CardTitle className="text-xl font-semibold">Mobile App Testing</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Comprehensive testing across various devices and platforms for seamless mobile experiences.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section id="benefits" className="py-16 px-8 bg-white dark:bg-gray-800 rounded-lg shadow-md mb-12">
+        <h3 className="text-4xl font-bold text-center text-primary mb-12">Benefits of Partnering with DovoQA</h3>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <CheckCircle className="h-10 w-10 text-primary mb-4" />
+              <CardTitle className="text-xl font-semibold">Cost Efficiency</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Reduce operational costs with our flat-rate model, eliminating unexpected expenses.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <CheckCircle className="h-10 w-10 text-primary mb-4" />
+              <CardTitle className="text-xl font-semibold">Accelerated Time-to-Market</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Streamlined QA processes help you launch high-quality software faster.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <CheckCircle className="h-10 w-10 text-primary mb-4" />
+              <CardTitle className="text-xl font-semibold">Enhanced Quality</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Leverage our expertise to deliver robust, bug-free applications.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <CheckCircle className="h-10 w-10 text-primary mb-4" />
+              <CardTitle className="text-xl font-semibold">Scalability & Flexibility</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Easily scale QA efforts up or down based on project demands without hiring overhead.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <CheckCircle className="h-10 w-10 text-primary mb-4" />
+              <CardTitle className="text-xl font-semibold">Risk Mitigation</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                Proactive identification and resolution of issues minimize post-launch risks.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardHeader>
+              <CheckCircle className="h-10 w-10 text-primary mb-4" />
+              <CardTitle className="text-xl font-semibold">Dedicated Partnership</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 dark:text-gray-300">
+                We act as an extension of your team, committed to your success.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section
+        id="contact"
+        className="py-16 px-8 bg-gradient-to-r from-primary to-teal-600 text-white rounded-lg shadow-xl text-center"
+      >
+        <h3 className="text-4xl font-bold mb-8">Ready to Elevate Your QA?</h3>
+        <p className="text-xl mb-10 max-w-2xl mx-auto opacity-90">
+          Contact us today to discuss your project and discover how DovoQA can help you deliver exceptional software.
+        </p>
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
+          <a href="mailto:hello@dovoqa.com" className="flex items-center space-x-3 text-lg font-medium hover:underline">
+            <Mail className="h-6 w-6" />
+            <span>hello@dovoqa.com</span>
+          </a>
+          <a href="tel:+54-9-11-3234-6592" className="flex items-center space-x-3 text-lg font-medium hover:underline">
+            <Phone className="h-6 w-6" />
+            <span>+54-9-11-3234-6592</span>
+          </a>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 px-8 text-center text-gray-600 dark:text-gray-400 text-sm">
+        <p>&copy; {new Date().getFullYear()} DovoQA. All rights reserved.</p>
+        <p>QA as a Service | Flat Rate | Unlimited Resources</p>
+      </footer>
     </div>
   )
 }
