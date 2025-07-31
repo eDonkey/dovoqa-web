@@ -1,40 +1,60 @@
+"use client"
+
+import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Mail, Phone, CheckCircle, DollarSign, Scale, ShieldCheck } from "lucide-react"
-import Image from "next/image"
+import { Mail, Phone, MapPin, CheckCircle, Lightbulb, Users, DollarSign, Clock, Award, Star } from "lucide-react"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { ContactForm } from "@/components/contact-form"
 import { EmailModalForm } from "@/components/email-modal-form"
+import { useEffect, useState } from "react"
+import { useToast } from "@/components/ui/use-toast"
 import { Analytics } from "@vercel/analytics/react"
-import Link from "next/link" // Import Link for navigation
 
-export default function LandingPage() {
-  const isUnderConstruction = process.env.NEXT_PUBLIC_UNDER_CONSTRUCTION === "true"
+export default function Home() {
+  const [isUnderConstruction, setIsUnderConstruction] = useState(false)
+  const { toast } = useToast()
+
+  useEffect(() => {
+    // Check for NEXT_PUBLIC_UNDER_CONSTRUCTION environment variable
+    if (process.env.NEXT_PUBLIC_UNDER_CONSTRUCTION === "true") {
+      setIsUnderConstruction(true)
+      toast({
+        title: "Under Construction",
+        description: "This site is currently under construction. Please check back later!",
+        duration: 5000,
+      })
+    }
+  }, [toast])
 
   if (isUnderConstruction) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 text-white p-4">
-        <div className="text-center">
-          <h1 className="text-5xl font-extrabold mb-4 animate-pulse">Under Construction</h1>
-          <p className="text-xl mb-8">We're building something amazing! Please check back soon.</p>
-          <div className="relative w-64 h-64 mx-auto mb-8">
-            <Image
-              src="/placeholder.svg?height=256&width=256"
-              alt="Under Construction"
-              layout="fill"
-              objectFit="contain"
-              className="animate-bounce"
-            />
-          </div>
-          <p className="text-lg">In the meantime, feel free to reach out to us:</p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-4">
-            <a href="mailto:hello@dovoqa.com" className="flex items-center space-x-2 text-lg hover:underline">
-              <Mail className="h-5 w-5" />
-              <span>hello@dovoqa.com</span>
-            </a>
-            <a href="tel:+54-9-11-3234-6592" className="flex items-center space-x-2 text-lg hover:underline">
-              <Phone className="h-5 w-5" />
-              <span>+54-9-11-3234-6592</span>
-            </a>
+        <div className="text-center space-y-6">
+          <Image
+            src="/placeholder-logo.png"
+            alt="DovoQA Logo"
+            width={200}
+            height={200}
+            className="mx-auto animate-pulse"
+          />
+          <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl">DovoQA</h1>
+          <p className="mt-3 text-xl sm:text-2xl md:text-3xl text-gray-300">
+            Our website is currently under construction.
+          </p>
+          <p className="mt-2 text-lg text-gray-400">We're working hard to bring you a better experience!</p>
+          <div className="flex justify-center space-x-4 mt-6">
+            <Link href="mailto:info@dovoqa.com" passHref>
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105">
+                Contact Us
+              </Button>
+            </Link>
+            <Link href="tel:+1234567890" passHref>
+              <Button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105">
+                Call Us
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -42,342 +62,297 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="font-sans bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
       <Analytics />
-      {/* Header */}
-      <header className="flex items-center justify-between py-6 px-8 bg-white dark:bg-gray-800 shadow-md">
-        <div className="flex items-center space-x-4">
-          <Image src="/images/dovoqa-logo.png" alt="DovoQA Logo" width={60} height={60} className="rounded-full" />
-          <h1 className="text-3xl font-bold text-primary">DovoQA</h1>
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+          <Link className="flex items-center gap-2" href="#">
+            <Image src="/placeholder-logo.png" alt="DovoQA Logo" width={40} height={40} className="rounded-full" />
+            <span className="text-lg font-semibold">DovoQA</span>
+          </Link>
+          <nav className="hidden space-x-4 md:flex">
+            <Link className="font-medium hover:underline underline-offset-4" href="#services">
+              Our Services
+            </Link>
+            <Link className="font-medium hover:underline underline-offset-4" href="#process">
+              Process
+            </Link>
+            <Link className="font-medium hover:underline underline-offset-4" href="#benefits">
+              Benefits
+            </Link>
+            <Link className="font-medium hover:underline underline-offset-4" href="#pricing">
+              Pricing
+            </Link>
+            <Link className="font-medium hover:underline underline-offset-4" href="#contact">
+              Contact Us
+            </Link>
+            <Link className="font-medium hover:underline underline-offset-4" href="/brochure-en">
+              Brochure (EN)
+            </Link>
+            <Link className="font-medium hover:underline underline-offset-4" href="/brochure-es">
+              Brochure (ES)
+            </Link>
+          </nav>
+          <ThemeToggle />
         </div>
-        <nav>
-          <ul className="flex space-x-6">
-            <li>
-              <Link href="#services" className="text-lg font-medium hover:text-primary transition-colors">
-                Services
-              </Link>
-            </li>
-            <li>
-              <Link href="#process" className="text-lg font-medium hover:text-primary transition-colors">
-                Process
-              </Link>
-            </li>
-            <li>
-              <Link href="#benefits" className="text-lg font-medium hover:text-primary transition-colors">
-                Benefits
-              </Link>
-            </li>
-            {/* Testimonials link removed */}
-            <li>
-              <Link href="#contact" className="text-lg font-medium hover:text-primary transition-colors">
-                Contact
-              </Link>
-            </li>
-          </ul>
-        </nav>
       </header>
-
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary to-teal-600 text-white py-20 px-8 rounded-b-3xl shadow-xl overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <Image
-            src="/placeholder.jpg?query=abstract-geometric-pattern"
-            alt="Background Pattern"
-            layout="fill"
-            objectFit="cover"
-            quality={100}
-          />
-        </div>
-        <div className="relative z-10 max-w-4xl mx-auto text-center animate-fade-in-up">
-          <h2 className="text-5xl font-extrabold mb-6 leading-tight">Elevate Your Software Quality with DovoQA</h2>
-          <p className="text-xl mb-8 opacity-90">
-            Your dedicated QA partner, ensuring flawless software delivery with unparalleled flexibility and predictable
-            costs.
-          </p>
-          <Button className="bg-secondary text-white hover:bg-secondary/90 text-lg px-8 py-4 rounded-full shadow-lg transition-transform transform hover:scale-105">
-            Get a Free Consultation
-          </Button>
-        </div>
-      </section>
-
-      {/* Why DovoQA? Section - Unique Selling Propositions */}
-      <section className="py-16 px-8 bg-white dark:bg-gray-800 rounded-lg shadow-md mx-8 -mt-12 relative z-10 animate-fade-in">
-        <h3 className="text-4xl font-bold text-center text-primary mb-12">Why Choose DovoQA? Our Unique Difference</h3>
-        <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-          <Card className="text-center p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-left">
-            <CardHeader>
-              <ShieldCheck className="h-16 w-16 text-primary mx-auto mb-4" />
-              <CardTitle className="text-2xl font-semibold mb-2">QA as a Service</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Focus on your core business while we handle all your Quality Assurance needs. Our expert team integrates
-                seamlessly with your development cycle.
+      <main className="flex-1">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-r from-purple-500 to-indigo-600 text-white flex items-center justify-center">
+          <div className="container px-4 md:px-6 text-center">
+            <div className="space-y-4">
+              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none animate-fade-in-up">
+                Elevate Your Software Quality with DovoQA
+              </h1>
+              <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl animate-fade-in-up delay-200">
+                Comprehensive Quality Assurance as a Service (QAaaS) for flawless software delivery.
               </p>
-            </CardContent>
-          </Card>
-
-          <Card className="text-center p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in">
-            <CardHeader>
-              <DollarSign className="h-16 w-16 text-primary mx-auto mb-4" />
-              <CardTitle className="text-2xl font-semibold mb-2">Flat Rate, Predictable Costs</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Enjoy a flat annual rate, regardless of the time or resources required. No surprises, just clear,
-                consistent billing for your budget.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="text-center p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-right">
-            <CardHeader>
-              <Scale className="h-16 w-16 text-primary mx-auto mb-4" />
-              <CardTitle className="text-2xl font-semibold mb-2">
-                Virtually Unlimited Resources & Adaptability
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Access a vast pool of QA talent. We adapt our resources to your project's evolving stages, ensuring
-                optimal support without affecting your billing.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Our Services Section */}
-      <section id="services" className="py-16 px-8 bg-gray-100 dark:bg-gray-850 animate-fade-in">
-        <h3 className="text-4xl font-bold text-center text-primary mb-12">Our Comprehensive QA Services</h3>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-left">
-            <CardHeader>
-              <CheckCircle className="h-10 w-10 text-secondary mb-4" />
-              <CardTitle className="text-xl font-semibold">Functional Testing</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Ensuring every feature works exactly as intended, meeting all specified requirements.
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in">
-            <CardHeader>
-              <CheckCircle className="h-10 w-10 text-secondary mb-4" />
-              <CardTitle className="text-xl font-semibold">Performance Testing</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Verifying application responsiveness, stability, and scalability under various loads.
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-right">
-            <CardHeader>
-              <CheckCircle className="h-10 w-10 text-secondary mb-4" />
-              <CardTitle className="text-xl font-semibold">Security Testing</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Identifying vulnerabilities and protecting your software from potential threats.
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-left">
-            <CardHeader>
-              <CheckCircle className="h-10 w-10 text-secondary mb-4" />
-              <CardTitle className="text-xl font-semibold">Automation Testing</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Developing robust automated test suites for faster, more efficient regression cycles.
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in">
-            <CardHeader>
-              <CheckCircle className="h-10 w-10 text-secondary mb-4" />
-              <CardTitle className="text-xl font-semibold">Usability Testing</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Evaluating user-friendliness and overall user experience to ensure intuitive interfaces.
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-right">
-            <CardHeader>
-              <CheckCircle className="h-10 w-10 text-secondary mb-4" />
-              <CardTitle className="text-xl font-semibold">Mobile App Testing</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Comprehensive testing across various devices and platforms for seamless mobile experiences.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Our Process Section */}
-      <section id="process" className="py-16 px-8 bg-white dark:bg-gray-800 animate-fade-in">
-        <h3 className="text-4xl font-bold text-center text-primary mb-12">Our Streamlined QA Process</h3>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto text-center">
-          <div className="flex flex-col items-center animate-zoom-in">
-            <div className="bg-secondary text-white rounded-full h-16 w-16 flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">
-              1
+              <div className="space-x-4 animate-fade-in-up delay-400">
+                <Button className="inline-flex h-10 items-center justify-center rounded-md bg-white text-purple-600 px-8 text-sm font-medium shadow transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50">
+                  Get a Quote
+                </Button>
+                <Button className="inline-flex h-10 items-center justify-center rounded-md border border-white bg-transparent text-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-white hover:text-purple-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50">
+                  Learn More
+                </Button>
+              </div>
             </div>
-            <h4 className="text-xl font-semibold text-primary mb-2">Discovery & Planning</h4>
-            <p className="text-gray-700 dark:text-gray-300">
-              We understand your project, requirements, and define a tailored QA strategy.
-            </p>
           </div>
-          <div className="flex flex-col items-center animate-zoom-in delay-100">
-            <div className="bg-secondary text-white rounded-full h-16 w-16 flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">
-              2
+        </section>
+
+        <section id="services" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl animate-fade-in-up">Our Services</h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 animate-fade-in-up delay-200">
+                  We offer a wide range of QA services to ensure your software meets the highest standards.
+                </p>
+              </div>
             </div>
-            <h4 className="text-xl font-semibold text-primary mb-2">Test Design & Development</h4>
-            <p className="text-gray-700 dark:text-gray-300">
-              Creating comprehensive test cases and setting up the testing environment.
-            </p>
-          </div>
-          <div className="flex flex-col items-center animate-zoom-in delay-200">
-            <div className="bg-secondary text-white rounded-full h-16 w-16 flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">
-              3
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
+                <CheckCircle className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Manual Testing</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Thorough manual testing to identify critical bugs and ensure user satisfaction.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-400">
+                <Lightbulb className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Automation Testing</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Automated test suites for faster feedback and efficient regression testing.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-500">
+                <Users className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Performance Testing</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Ensure your application performs optimally under various load conditions.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-600">
+                <DollarSign className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Security Testing</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Identify vulnerabilities and protect your application from potential threats.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-700">
+                <Clock className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Consulting & Strategy</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Expert guidance to build a robust QA strategy tailored to your development lifecycle.
+                </CardContent>
+              </Card>
             </div>
-            <h4 className="text-xl font-semibold text-primary mb-2">Execution & Reporting</h4>
-            <p className="text-gray-700 dark:text-gray-300">
-              Executing tests, identifying defects, and providing detailed reports.
-            </p>
           </div>
-          <div className="flex flex-col items-center animate-zoom-in delay-300">
-            <div className="bg-secondary text-white rounded-full h-16 w-16 flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">
-              4
+        </section>
+
+        <section id="process" className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-900">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl animate-fade-in-up">Our Process</h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 animate-fade-in-up delay-200">
+                  Our streamlined process ensures efficient and effective quality assurance.
+                </p>
+              </div>
             </div>
-            <h4 className="text-xl font-semibold text-primary mb-2">Continuous Improvement</h4>
-            <p className="text-gray-700 dark:text-gray-300">
-              Iterative testing and feedback loops to ensure ongoing quality enhancement.
-            </p>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-1 lg:grid-cols-3">
+              <Card className="flex flex-col items-center p-6 text-center bg-gray-50 dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
+                <Award className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">1. Discovery & Planning</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  We start by understanding your project, requirements, and goals to create a tailored QA plan.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-gray-50 dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-400">
+                <Star className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">2. Execution & Reporting</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Our QA experts execute the test plan, providing regular updates and detailed reports.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-gray-50 dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-500">
+                <CheckCircle className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">3. Continuous Improvement</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  We continuously refine our approach based on feedback and evolving project needs.
+                </CardContent>
+              </Card>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Benefits Section */}
-      <section id="benefits" className="py-16 px-8 bg-gray-100 dark:bg-gray-850 animate-fade-in">
-        <h3 className="text-4xl font-bold text-center text-primary mb-12">Benefits of Partnering with DovoQA</h3>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-left">
-            <CardHeader>
-              <CheckCircle className="h-10 w-10 text-primary mb-4" />
-              <CardTitle className="text-xl font-semibold">Cost Efficiency</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Reduce operational costs with our flat-rate model, eliminating unexpected expenses.
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in">
-            <CardHeader>
-              <CheckCircle className="h-10 w-10 text-primary mb-4" />
-              <CardTitle className="text-xl font-semibold">Accelerated Time-to-Market</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Streamlined QA processes help you launch high-quality software faster.
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-right">
-            <CardHeader>
-              <CheckCircle className="h-10 w-10 text-primary mb-4" />
-              <CardTitle className="text-xl font-semibold">Enhanced Quality</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Leverage our expertise to deliver robust, bug-free applications.
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-left">
-            <CardHeader>
-              <CheckCircle className="h-10 w-10 text-primary mb-4" />
-              <CardTitle className="text-xl font-semibold">Scalability & Flexibility</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Easily scale QA efforts up or down based on project demands without hiring overhead.
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in">
-            <CardHeader>
-              <CheckCircle className="h-10 w-10 text-primary mb-4" />
-              <CardTitle className="text-xl font-semibold">Risk Mitigation</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                Proactive identification and resolution of issues minimize post-launch risks.
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-in-right">
-            <CardHeader>
-              <CheckCircle className="h-10 w-10 text-primary mb-4" />
-              <CardTitle className="text-xl font-semibold">Dedicated Partnership</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 dark:text-gray-300">
-                We act as an extension of your team, committed to your success.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+        <section id="benefits" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl animate-fade-in-up">
+                  Benefits of QAaaS
+                </h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 animate-fade-in-up delay-200">
+                  Partnering with DovoQA brings numerous advantages to your software development lifecycle.
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
+                <CheckCircle className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Cost Efficiency</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Reduce overheads associated with in-house QA teams and infrastructure.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-400">
+                <Lightbulb className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Expertise On-Demand</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Access a team of seasoned QA professionals with diverse industry experience.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-500">
+                <Users className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Faster Time-to-Market</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Accelerate your release cycles with efficient and scalable testing processes.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-600">
+                <DollarSign className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Improved Quality</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Deliver high-quality, bug-free software that delights your users.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-700">
+                <Clock className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Scalability</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Easily scale your QA efforts up or down based on project demands.
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
 
-      {/* Testimonials Section removed */}
+        <section id="pricing" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl animate-fade-in-up">
+                  Flat-Rate Pricing
+                </h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 animate-fade-in-up delay-200">
+                  Transparent and predictable pricing for all your QA needs.
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-1 lg:grid-cols-2">
+              <Card className="flex flex-col p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold mb-2">Basic QA Package</CardTitle>
+                  <p className="text-4xl font-extrabold text-purple-600 mb-4">
+                    $999<span className="text-lg text-gray-500">/month</span>
+                  </p>
+                </CardHeader>
+                <CardContent className="text-gray-600 dark:text-gray-400 space-y-2">
+                  <ul className="list-disc list-inside text-left mx-auto max-w-xs">
+                    <li>Manual Testing (up to 40 hours/month)</li>
+                    <li>Basic Test Case Management</li>
+                    <li>Weekly Progress Reports</li>
+                    <li>Email Support</li>
+                  </ul>
+                  <Button className="mt-6 bg-purple-600 hover:bg-purple-700 text-white">Choose Plan</Button>
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-400">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold mb-2">Premium QA Package</CardTitle>
+                  <p className="text-4xl font-extrabold text-purple-600 mb-4">
+                    $1999<span className="text-lg text-gray-500">/month</span>
+                  </p>
+                </CardHeader>
+                <CardContent className="text-gray-600 dark:text-gray-400 space-y-2">
+                  <ul className="list-disc list-inside text-left mx-auto max-w-xs">
+                    <li>Manual & Automation Testing (up to 80 hours/month)</li>
+                    <li>Advanced Test Case Management</li>
+                    <li>Daily Progress Reports</li>
+                    <li>Dedicated QA Lead</li>
+                    <li>Priority Support</li>
+                  </ul>
+                  <Button className="mt-6 bg-purple-600 hover:bg-purple-700 text-white">Choose Plan</Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
 
-      {/* Contact Section */}
-      <section
-        id="contact"
-        className="py-16 px-8 bg-gradient-to-r from-primary to-teal-600 text-white rounded-t-3xl shadow-xl text-center animate-fade-in-up"
-      >
-        <h3 className="text-4xl font-bold mb-8">Ready to Elevate Your QA?</h3>
-        <p className="text-xl mb-10 max-w-2xl mx-auto opacity-90">
-          Contact us today to discuss your project and discover how DovoQA can help you deliver exceptional software.
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-          <a href="mailto:hello@dovoqa.com" className="flex items-center space-x-3 text-lg font-medium hover:underline">
-            <Mail className="h-6 w-6" />
-            <span>hello@dovoqa.com</span>
-          </a>
-          <a href="tel:+54-9-11-3234-6592" className="flex items-center space-x-3 text-lg font-medium hover:underline">
-            <Phone className="h-6 w-6" />
-            <span>+54-9-11-3234-6592</span>
-          </a>
-          <a
-            href="https://wa.me/5491132346592"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-3 text-lg font-medium hover:underline"
-          >
-            <Image src="/whatsapp-icon.tsx" alt="WhatsApp" width={24} height={24} />
-            <span>WhatsApp</span>
-          </a>
-        </div>
-        <div className="mt-12 max-w-lg mx-auto">
-          <ContactForm />
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-8 px-8 text-center text-gray-600 dark:text-gray-400 text-sm">
-        <p>&copy; {new Date().getFullYear()} DovoQA. All rights reserved.</p>
-        <p>QA as a Service | Flat Rate | Unlimited Resources</p>
-        <div className="mt-4">
-          <EmailModalForm />
-        </div>
+        <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-900">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl animate-fade-in-up">Contact Us</h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 animate-fade-in-up delay-200">
+                  Have questions or ready to start your QA journey? Reach out to us!
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-1 lg:grid-cols-2">
+              <div className="flex flex-col space-y-4">
+                <div className="flex items-center space-x-4">
+                  <Mail className="h-6 w-6 text-purple-600" />
+                  <Link href="mailto:info@dovoqa.com" className="text-gray-600 dark:text-gray-400 hover:underline">
+                    info@dovoqa.com
+                  </Link>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <Phone className="h-6 w-6 text-purple-600" />
+                  <Link href="tel:+1234567890" className="text-gray-600 dark:text-gray-400 hover:underline">
+                    +1 (234) 567-890
+                  </Link>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <MapPin className="h-6 w-6 text-purple-600" />
+                  <p className="text-gray-600 dark:text-gray-400">Remote - Global Reach</p>
+                </div>
+                <EmailModalForm />
+              </div>
+              <ContactForm />
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t bg-gray-100 dark:bg-gray-800">
+        <p className="text-xs text-gray-500 dark:text-gray-400">&copy; 2024 DovoQA. All rights reserved.</p>
+        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+          <Link className="text-xs hover:underline underline-offset-4 text-gray-500 dark:text-gray-400" href="#">
+            Terms of Service
+          </Link>
+          <Link className="text-xs hover:underline underline-offset-4 text-gray-500 dark:text-gray-400" href="#">
+            Privacy
+          </Link>
+        </nav>
       </footer>
     </div>
   )
