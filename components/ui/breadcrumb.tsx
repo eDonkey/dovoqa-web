@@ -1,4 +1,3 @@
-import Link from "next/link"
 import * as React from "react"
 import { ChevronRight, MoreHorizontal } from "lucide-react"
 
@@ -37,7 +36,7 @@ const BreadcrumbLink = React.forwardRef<
     asChild?: boolean
   }
 >(({ asChild, className, ...props }, ref) => (
-  <Link ref={ref} className={cn("transition-colors hover:text-foreground", className)} {...props} />
+  <a ref={ref} className={cn("transition-colors hover:text-foreground", className)} {...props} />
 ))
 BreadcrumbLink.displayName = "BreadcrumbLink"
 
@@ -49,12 +48,7 @@ const BreadcrumbSeparator = ({ children, className, ...props }: React.ComponentP
 BreadcrumbSeparator.displayName = "BreadcrumbSeparator"
 
 const BreadcrumbEllipsis = ({ className, ...props }: React.ComponentPropsWithoutRef<"span">) => (
-  <span
-    role="presentation"
-    aria-hidden="true"
-    className={cn("flex h-9 w-9 items-center justify-center", className)}
-    {...props}
-  >
+  <span aria-hidden="true" className={cn("flex h-9 w-9 items-center justify-center", className)} {...props}>
     <MoreHorizontal className="h-4 w-4" />
     <span className="sr-only">More</span>
   </span>

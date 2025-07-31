@@ -15,8 +15,8 @@ export async function sendContactEmail(formData: FormData) {
 
   try {
     await resend.emails.send({
-      from: "DovoQA Contact Form <onboarding@resend.dev>", // Replace with your verified Resend domain
-      to: "contact@dovoqa.com", // Replace with your actual contact email
+      from: "onboarding@resend.dev", // Replace with your verified Resend domain
+      to: "delivered@resend.dev", // Replace with your actual recipient email
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <p><strong>Name:</strong> ${name}</p>

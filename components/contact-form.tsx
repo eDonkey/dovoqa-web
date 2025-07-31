@@ -1,80 +1,78 @@
 "use client"
 
-import type React from "react"
-
-import { useState } from "react"
+import { useActionState } from "react"
+import { sendContactEmail } from "@/app/actions/contact"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/components/ui/use-toast"
-import { sendContactEmail } from "@/app/actions/contact"
 
 export function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
+  const [state, formAction, isPending] = useActionState(sendContactEmail, null)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    const response = await sendContactEmail(new FormData(e.currentTarget))
-    if (response.success) {
-      toast({
-        title: "Success!",
-        description: response.message,
-        variant: "default",
-      })
-      setFormData({ name: "", email: "", message: "" })
-    } else {
-      toast({
-        title: "Error!",
-        description: response.message,
-        variant: "destructive",
-      })
-    }
-    setIsSubmitting(false)
+  // Show toast message based on action state
+  if (state?.message) {
+    toast({
+      title: state.success ? "Success!" : "Error!",
+      description: state.message,
+      variant: state.success ? "success" : "destructive",
+    })
+    // Reset state message after showing toast to prevent re-showing on re-renders
+    state.message = undefined
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid gap-2">
-        <Label htmlFor="name">Name</Label>
-        <Input id="name" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} required />
+    <form action={formAction} className="space-y-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+      <div>
+        <Label htmlFor="name" className="text-lg">
+          Name
+        </Label>
+        <Input
+          id="name"
+          name="name"
+          type="text"
+          placeholder="Your Name"
+          required
+          className="mt-2 p-3 w-full border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50"
+          disabled={isPending}
+        />
       </div>
-      <div className="grid gap-2">
-        <Label htmlFor="email">Email</Label>
+      <div>
+        <Label htmlFor="email" className="text-lg">
+          Email
+        </Label>
         <Input
           id="email"
           name="email"
           type="email"
-          placeholder="your@example.com"
-          value={formData.email}
-          onChange={handleChange}
+          placeholder="your@email.com"
           required
+          className="mt-2 p-3 w-full border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50"
+          disabled={isPending}
         />
       </div>
-      <div className="grid gap-2">
-        <Label htmlFor="message">Message</Label>
+      <div>
+        <Label htmlFor="message" className="text-lg">
+          Message
+        </Label>
         <Textarea
           id="message"
           name="message"
-          placeholder="Your message here..."
-          value={formData.message}
-          onChange={handleChange}
+          placeholder="Your message..."
+          rows={5}
           required
+          className="mt-2 p-3 w-full border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50"
+          disabled={isPending}
         />
       </div>
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "Sending..." : "Send Message"}
+      <Button
+        type="submit"
+        className="w-full bg-primary text-white py-3 rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={isPending}
+      >
+        {isPending ? "Sending..." : "Send Message"}
       </Button>
     </form>
   )

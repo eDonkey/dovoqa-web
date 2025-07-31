@@ -14,40 +14,38 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
-import { sendContactEmail } from "@/app/actions/contact"
+import { sendContactEmail } from "@/app/actions/contact" // Reusing the contact action for simplicity
 
 export function EmailModalForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [email, setEmail] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    const response = await sendContactEmail(new FormData(e.currentTarget))
-    if (response.success) {
+
+    const formData = new FormData()
+    formData.append("name", "Modal Subscriber") // Generic name for modal submissions
+    formData.append("email", email)
+    formData.append("message", "Subscription request from email modal.")
+
+    const result = await sendContactEmail(formData)
+
+    if (result.success) {
       toast({
         title: "Success!",
-        description: response.message,
-        variant: "default",
+        description: "Thank you for your interest! We will be in touch.",
+        variant: "success",
       })
-      setFormData({ name: "", email: "", message: "" })
-      setIsOpen(false) // Close modal on success
+      setEmail("")
+      setIsOpen(false)
     } else {
       toast({
         title: "Error!",
-        description: response.message,
+        description: result.message || "Failed to subscribe. Please try again.",
         variant: "destructive",
       })
     }
@@ -57,56 +55,35 @@ export function EmailModalForm() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Open Contact Form</Button>
+        <Button className="fixed bottom-4 right-4 bg-secondary text-white hover:bg-secondary/90 shadow-lg">
+          Subscribe for Updates
+        </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] dark:bg-gray-800 dark:text-gray-50">
         <DialogHeader>
-          <DialogTitle>Contact Us</DialogTitle>
-          <DialogDescription>Fill out the form below to get in touch with us.</DialogDescription>
+          <DialogTitle className="text-primary">Stay Updated with DovoQA</DialogTitle>
+          <DialogDescription className="dark:text-gray-300">
+            Enter your email below to receive news, updates, and exclusive offers from DovoQA.
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="col-span-3"
-              required
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="email" className="text-right">
+          <div className="grid gap-2">
+            <Label htmlFor="email" className="text-lg">
               Email
             </Label>
             <Input
               id="email"
-              name="email"
               type="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="col-span-3"
+              placeholder="your@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
+              className="dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50"
+              disabled={isSubmitting}
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="message" className="text-right">
-              Message
-            </Label>
-            <Textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              className="col-span-3"
-              required
-            />
-          </div>
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Sending..." : "Send Message"}
+          <Button type="submit" className="bg-primary text-white hover:bg-primary/90" disabled={isSubmitting}>
+            {isSubmitting ? "Subscribing..." : "Subscribe"}
           </Button>
         </form>
       </DialogContent>

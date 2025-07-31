@@ -1,131 +1,84 @@
 import Image from "next/image"
-import Link from "next/link"
+import { Mail, Phone, Globe, MapPin } from "lucide-react"
 
 export default function EmailSignaturePage() {
-  const name = "John Doe"
-  const title = "CEO & Founder"
-  const company = "DovoQA"
-  const website = "dovoqa.com"
-  const email = "john.doe@dovoqa.com"
-  const phone = "+1 (555) 123-4567"
-  const linkedin = "https://linkedin.com/in/johndoe"
-  const twitter = "https://twitter.com/johndoe"
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold mb-6">DovoQA Email Signatures</h1>
+      <div className="bg-white shadow-lg rounded-lg p-6 max-w-md w-full">
+        <h1 className="text-2xl font-bold text-center mb-6">DovoQA Email Signature</h1>
 
-      {/* Simple Signature */}
-      <div className="bg-white p-6 rounded-lg shadow-md mb-8 w-full max-w-md">
-        <h2 className="text-xl font-semibold mb-4">Simple Signature</h2>
-        <div className="font-sans text-sm text-gray-800">
-          <p className="font-bold text-base">{name}</p>
-          <p>
-            {title} | {company}
-          </p>
-          <p>
-            <Link href={`mailto:${email}`} className="text-blue-600 hover:underline">
-              {email}
-            </Link>
-          </p>
-          <p>
-            <Link href={`tel:${phone}`} className="text-blue-600 hover:underline">
-              {phone}
-            </Link>
-          </p>
-          <p>
-            <Link
-              href={`https://${website}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
-            >
-              {website}
-            </Link>
-          </p>
+        {/* Simple Signature */}
+        <div className="border p-4 rounded-md mb-6">
+          <h2 className="text-xl font-semibold mb-4">Simple Signature</h2>
+          <div className="font-sans text-sm text-gray-800">
+            <p className="font-bold text-lg text-blue-600">John Doe</p>
+            <p className="text-gray-700">QA Lead at DovoQA</p>
+            <p className="mt-2">
+              <a href="mailto:john.doe@dovoqa.com" className="text-blue-600 hover:underline flex items-center">
+                <Mail className="h-4 w-4 mr-1" /> john.doe@dovoqa.com
+              </a>
+            </p>
+            <p>
+              <a href="tel:+1234567890" className="text-blue-600 hover:underline flex items-center">
+                <Phone className="h-4 w-4 mr-1" /> +1 (234) 567-890
+              </a>
+            </p>
+            <p>
+              <a
+                href="https://dovoqa.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline flex items-center"
+              >
+                <Globe className="h-4 w-4 mr-1" /> dovoqa.com
+              </a>
+            </p>
+          </div>
         </div>
-      </div>
 
-      {/* Professional Signature */}
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-xl font-semibold mb-4">Professional Signature</h2>
-        <table
-          cellPadding="0"
-          cellSpacing="0"
-          style={{
-            fontFamily: "Arial, sans-serif",
-            fontSize: "12px",
-            color: "#333333",
-            lineHeight: "18px",
-            width: "100%",
-          }}
-        >
-          <tbody>
-            <tr>
-              <td style={{ paddingRight: "10px", verticalAlign: "top" }}>
-                <Image
-                  src="/placeholder-logo.png"
-                  alt={`${company} Logo`}
-                  width={70}
-                  height={70}
-                  style={{ display: "block", borderRadius: "8px" }}
-                />
-              </td>
-              <td style={{ verticalAlign: "top" }}>
-                <p style={{ margin: "0", padding: "0", fontSize: "14px", fontWeight: "bold", color: "#007bff" }}>
-                  {name}
-                </p>
-                <p style={{ margin: "0", padding: "0", fontSize: "12px", color: "#555555" }}>
-                  {title} | {company}
-                </p>
-                <p style={{ margin: "0", padding: "0" }}>
-                  <Link href={`mailto:${email}`} style={{ color: "#007bff", textDecoration: "none" }}>
-                    {email}
-                  </Link>
-                </p>
-                <p style={{ margin: "0", padding: "0" }}>
-                  <Link href={`tel:${phone}`} style={{ color: "#007bff", textDecoration: "none" }}>
-                    {phone}
-                  </Link>
-                </p>
-                <p style={{ margin: "0", padding: "0" }}>
-                  <Link
-                    href={`https://${website}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "#007bff", textDecoration: "none" }}
-                  >
-                    {website}
-                  </Link>
-                </p>
-                <div style={{ marginTop: "5px" }}>
-                  {linkedin && (
-                    <Link href={linkedin} target="_blank" rel="noopener noreferrer" style={{ marginRight: "5px" }}>
-                      <Image
-                        src="/placeholder.svg?height=20&width=20"
-                        alt="LinkedIn"
-                        width={20}
-                        height={20}
-                        style={{ verticalAlign: "middle" }}
-                      />
-                    </Link>
-                  )}
-                  {twitter && (
-                    <Link href={twitter} target="_blank" rel="noopener noreferrer">
-                      <Image
-                        src="/placeholder.svg?height=20&width=20"
-                        alt="Twitter"
-                        width={20}
-                        height={20}
-                        style={{ verticalAlign: "middle" }}
-                      />
-                    </Link>
-                  )}
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        {/* Detailed Signature */}
+        <div className="border p-4 rounded-md">
+          <h2 className="text-xl font-semibold mb-4">Detailed Signature</h2>
+          <div className="font-sans text-sm text-gray-800">
+            <div className="flex items-center mb-4">
+              <Image
+                src="/placeholder-logo.svg"
+                alt="DovoQA Logo"
+                width={80}
+                height={80}
+                className="rounded-full mr-4"
+              />
+              <div>
+                <p className="font-bold text-lg text-blue-600">Jane Smith</p>
+                <p className="text-gray-700">Senior QA Engineer</p>
+                <p className="text-gray-600">DovoQA - QA as a Service</p>
+              </div>
+            </div>
+            <p className="mt-2">
+              <a href="mailto:jane.smith@dovoqa.com" className="text-blue-600 hover:underline flex items-center">
+                <Mail className="h-4 w-4 mr-1" /> jane.smith@dovoqa.com
+              </a>
+            </p>
+            <p>
+              <a href="tel:+1987654321" className="text-blue-600 hover:underline flex items-center">
+                <Phone className="h-4 w-4 mr-1" /> +1 (987) 654-321
+              </a>
+            </p>
+            <p>
+              <a
+                href="https://dovoqa.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline flex items-center"
+              >
+                <Globe className="h-4 w-4 mr-1" /> dovoqa.com
+              </a>
+            </p>
+            <p className="flex items-center text-gray-600">
+              <MapPin className="h-4 w-4 mr-1" /> 123 QA Lane, Quality City, QC 12345
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   )

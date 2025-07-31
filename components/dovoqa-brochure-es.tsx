@@ -11,19 +11,25 @@ export default function DovoqaBrochureEs() {
       {/* Header */}
       <header className="flex items-center justify-between py-6 px-8 bg-white dark:bg-gray-800 shadow-md rounded-lg mb-8">
         <div className="flex items-center space-x-4">
-          <Image src="/placeholder-logo.svg" alt="Logo de DovoQA" width={60} height={60} className="rounded-full" />
+          <Image src="/images/dovoqa-logo.png" alt="Logo de DovoQA" width={60} height={60} className="rounded-full" />
           <h1 className="text-3xl font-bold text-primary">DovoQA</h1>
         </div>
         <nav>
           <ul className="flex space-x-6">
             <li>
-              
+              <a href="#services" className="text-lg font-medium hover:text-primary transition-colors">
+                Servicios
+              </a>
             </li>
             <li>
-              
+              <a href="#benefits" className="text-lg font-medium hover:text-primary transition-colors">
+                Beneficios
+              </a>
             </li>
             <li>
-              
+              <a href="#contact" className="text-lg font-medium hover:text-primary transition-colors">
+                Contacto
+              </a>
             </li>
           </ul>
         </nav>

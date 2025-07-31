@@ -14,15 +14,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'source.unsplash.com',
-      },
-      {
-        protocol: 'https',
         hostname: 'plus.unsplash.com',
       },
       {
         protocol: 'https',
-        hostname: 'v0.dev',
+        hostname: 'hebbkx1anhila5yf.public.blob.vercel-storage.com',
       },
       {
         protocol: 'https',
