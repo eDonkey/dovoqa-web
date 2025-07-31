@@ -49,7 +49,7 @@ export default function DovoQABrochureES() {
           />
 
           <p className="font-light text-4xl">Aseguramiento de Calidad como Servicio</p>
-          <p className="text-xl mt-4">Su Socio para un Software Impecable</p>
+          <p className="text-xl mt-4">Nuestro compromiso es maximizar la calidad en tus proyectos.              </p>
         </section>
 
         {/* Introduction */}
