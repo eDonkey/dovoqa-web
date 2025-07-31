@@ -3,7 +3,7 @@
 import { useRef } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Mail, Phone, CheckCircle, DollarSign, Scale, ShieldCheck, Lightbulb } from "lucide-react"
+import { Mail, Phone, CheckCircle, DollarSign, Scale, ShieldCheck, Lightbulb, Code, GitBranch, Zap } from "lucide-react"
 import html2canvas from "html2canvas"
 import jsPDF from "jspdf"
 
@@ -133,6 +133,58 @@ export default function DovoQABrochureES() {
                 <h3 className="text-xl font-semibold">Consultoría y Estrategia</h3>
                 <p className="text-gray-700 dark:text-gray-300">
                   Proporcionando orientación experta y planificación estratégica para sus iniciativas de QA.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Technologies & Methodologies */}
+        <section className="mb-8">
+          <h2 className="text-3xl font-bold text-primary mb-6">Tecnologías y Metodologías</h2>
+          <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+            En DovoQA, aprovechamos tecnologías de vanguardia y nos adherimos a las mejores metodologías de la industria
+            para ofrecer un aseguramiento de calidad superior. Nuestro enfoque está diseñado para integrarse sin
+            problemas con sus pipelines de desarrollo, garantizando eficiencia, fiabilidad y una cobertura exhaustiva.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="flex items-start space-x-4">
+              <Code className="h-8 w-8 text-secondary flex-shrink-0" />
+              <div>
+                <h3 className="text-xl font-semibold">Automatización de Pruebas Avanzada</h3>
+                <p className="text-gray-700 dark:text-gray-300">
+                  Utilizamos frameworks como Selenium, Playwright y Cypress para suites de pruebas automatizadas
+                  robustas y escalables en capas web, móvil y API.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-4">
+              <Zap className="h-8 w-8 text-secondary flex-shrink-0" />
+              <div>
+                <h3 className="text-xl font-semibold">Herramientas de Rendimiento y Seguridad</h3>
+                <p className="text-gray-700 dark:text-gray-300">
+                  Empleamos JMeter, LoadRunner para análisis de rendimiento y OWASP ZAP, Burp Suite para evaluaciones
+                  detalladas de vulnerabilidades de seguridad.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-4">
+              <GitBranch className="h-8 w-8 text-secondary flex-shrink-0" />
+              <div>
+                <h3 className="text-xl font-semibold">Integración Agile y DevOps</h3>
+                <p className="text-gray-700 dark:text-gray-300">
+                  Integramos QA dentro de los sprints Agile y los pipelines de DevOps, promoviendo pruebas, integración
+                  y entrega continuas (CI/CD).
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-4">
+              <Lightbulb className="h-8 w-8 text-secondary flex-shrink-0" />
+              <div>
+                <h3 className="text-xl font-semibold">Shift-Left y Pruebas Basadas en Riesgos</h3>
+                <p className="text-gray-700 dark:text-gray-300">
+                  Implementamos pruebas tempranas en el ciclo de vida del desarrollo y priorizamos los esfuerzos de
+                  prueba basándonos en la evaluación de riesgos para un impacto máximo.
                 </p>
               </div>
             </div>
