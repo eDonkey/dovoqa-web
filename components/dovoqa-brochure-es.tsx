@@ -57,8 +57,8 @@ export default function DovoQABrochureES() {
             height={150}
             className="mx-auto mb-6"
           />
-          <h1 className="text-5xl font-extrabold mb-4">DovoQA</h1>
-          <p className="text-2xl font-light">Aseguramiento de Calidad como Servicio</p>
+          
+          <p className="font-light text-4xl">Aseguramiento de Calidad como Servicio</p>
           <p className="text-xl mt-4">Su Socio para un Software Impecable</p>
         </section>
 
