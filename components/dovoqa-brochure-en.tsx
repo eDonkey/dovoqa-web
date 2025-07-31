@@ -13,7 +13,11 @@ export default function DovoqaBrochureEn() {
 
   const handleDownloadPdf = async () => {
     if (brochureRef.current) {
-      const canvas = await html2canvas(brochureRef.current, { scale: 2 }) // Scale for better resolution
+      const canvas = await html2canvas(brochureRef.current, {
+        scale: 2, // Scale for better resolution
+        useCORS: true, // Enable CORS for images
+        allowTaint: true, // Allow tainting the canvas for cross-origin images
+      })
       const imgData = canvas.toDataURL("image/png")
       const pdf = new jsPDF("p", "mm", "a4")
       const imgWidth = 210 // A4 width in mm
