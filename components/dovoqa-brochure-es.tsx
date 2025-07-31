@@ -56,11 +56,7 @@ export default function DovoQABrochureES() {
         <section className="mb-8">
           <h2 className="text-3xl font-bold text-primary mb-4">Acerca de DovoQA</h2>
           <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-            DovoQA es un proveedor líder de Aseguramiento de Calidad como Servicio (QAaaS), dedicado a ayudar a las
-            empresas a entregar software de alta calidad y sin errores. Ofrecemos un modelo único de tarifa plana anual,
-            que proporciona costos predecibles y recursos prácticamente ilimitados para adaptarse a las necesidades
-            cambiantes de su proyecto. Nuestro equipo de expertos se integra perfectamente con su ciclo de desarrollo,
-            permitiéndole centrarse en la innovación mientras nosotros garantizamos una calidad impecable.
+            DovoQA es un proveedor de Aseguramiento de Calidad como Servicio (QAaaS), dedicado a ayudar a las empresas a entregar software de alta calidad y sin errores. Ofrecemos un modelo único de tarifa plana anual, que proporciona costos predecibles y recursos prácticamente ilimitados para adaptarse a las necesidades cambiantes de su proyecto. Nuestro equipo de expertos se integra perfectamente con su ciclo de desarrollo, permitiéndole centrarse en la innovación mientras nosotros garantizamos una calidad superior.
           </p>
         </section>
 
