@@ -18,23 +18,13 @@ export default function DovoQABrochureES() {
         allowTaint: true, // Allow tainting canvas with cross-origin images
       })
       const imgData = canvas.toDataURL("image/png")
-      const pdf = new jsPDF("p", "mm", "a4")
       const imgWidth = 210 // A4 width in mm
-      const pageHeight = 297 // A4 height in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width
-      let heightLeft = imgHeight
+      const imgHeight = (canvas.height * imgWidth) / canvas.width // Calculate height based on aspect ratio
 
-      let position = 0
+      // Create a new jsPDF instance with custom dimensions for a single, tall page
+      const pdf = new jsPDF("p", "mm", [imgWidth, imgHeight])
 
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight)
-      heightLeft -= pageHeight
-
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight
-        pdf.addPage()
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight)
-        heightLeft -= pageHeight
-      }
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight) // Add the entire image to the single page
 
       pdf.save("DovoQA_Brochure_ES.pdf")
     }
@@ -57,7 +47,7 @@ export default function DovoQABrochureES() {
             height={150}
             className="mx-auto mb-6"
           />
-          
+
           <p className="font-light text-4xl">Aseguramiento de Calidad como Servicio</p>
           <p className="text-xl mt-4">Su Socio para un Software Impecable</p>
         </section>
