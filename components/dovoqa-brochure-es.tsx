@@ -43,8 +43,8 @@ export default function DovoQABrochureES() {
           <Image
             src="/images/dovoqa-logo.png"
             alt="Logotipo de DovoQA"
-            width={150}
-            height={150}
+            width={250}
+            height={250}
             className="mx-auto mb-6"
           />
 
