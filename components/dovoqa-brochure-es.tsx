@@ -48,7 +48,7 @@ export default function DovoQABrochureES() {
             className="mx-auto mb-6"
           />
 
-          <p className="font-light text-4xl">Aseguramiento de Calidad como Servicio</p>
+          <p className="font-light text-4xl">Calidad superior y continua como servicio.</p>
           <p className="text-xl mt-4">Nuestro compromiso es maximizar la calidad en tus proyectos.              </p>
         </section>
 
