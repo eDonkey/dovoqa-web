@@ -2,9 +2,9 @@
 
 import { useActionState } from "react"
 import { sendContactEmail } from "@/app/actions/contact"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/components/ui/use-toast"
 
@@ -13,65 +13,44 @@ export function ContactForm() {
   const [state, formAction, isPending] = useActionState(sendContactEmail, null)
 
   // Show toast message based on action state
-  if (state?.message) {
+  if (state?.success) {
     toast({
-      title: state.success ? "Success!" : "Error!",
+      title: "Success!",
       description: state.message,
-      variant: state.success ? "success" : "destructive",
+      variant: "default",
     })
-    // Reset state message after showing toast to prevent re-showing on re-renders
-    state.message = undefined
+    state.success = false // Reset state to prevent re-showing toast on re-renders
+  } else if (state?.success === false) {
+    toast({
+      title: "Error!",
+      description: state.message,
+      variant: "destructive",
+    })
+    state.success = undefined // Reset state
   }
 
   return (
-    <form action={formAction} className="space-y-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+    <form action={formAction} className="space-y-4 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
+      <h4 className="text-2xl font-bold text-primary mb-4">Send us a message</h4>
       <div>
-        <Label htmlFor="name" className="text-lg">
+        <Label htmlFor="name" className="text-gray-700 dark:text-gray-300">
           Name
         </Label>
-        <Input
-          id="name"
-          name="name"
-          type="text"
-          placeholder="Your Name"
-          required
-          className="mt-2 p-3 w-full border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50"
-          disabled={isPending}
-        />
+        <Input id="name" name="name" type="text" placeholder="Your Name" required className="mt-1" />
       </div>
       <div>
-        <Label htmlFor="email" className="text-lg">
+        <Label htmlFor="email" className="text-gray-700 dark:text-gray-300">
           Email
         </Label>
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="your@email.com"
-          required
-          className="mt-2 p-3 w-full border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50"
-          disabled={isPending}
-        />
+        <Input id="email" name="email" type="email" placeholder="your@example.com" required className="mt-1" />
       </div>
       <div>
-        <Label htmlFor="message" className="text-lg">
+        <Label htmlFor="message" className="text-gray-700 dark:text-gray-300">
           Message
         </Label>
-        <Textarea
-          id="message"
-          name="message"
-          placeholder="Your message..."
-          rows={5}
-          required
-          className="mt-2 p-3 w-full border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50"
-          disabled={isPending}
-        />
+        <Textarea id="message" name="message" placeholder="Your message" required rows={5} className="mt-1" />
       </div>
-      <Button
-        type="submit"
-        className="w-full bg-primary text-white py-3 rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        disabled={isPending}
-      >
+      <Button type="submit" disabled={isPending} className="w-full bg-secondary hover:bg-secondary/90 text-white">
         {isPending ? "Sending..." : "Send Message"}
       </Button>
     </form>

@@ -10,13 +10,13 @@ export async function sendContactEmail(formData: FormData) {
   const message = formData.get("message") as string
 
   if (!name || !email || !message) {
-    return { success: false, message: "All fields are required." }
+    return { success: false, message: "Please fill in all fields." }
   }
 
   try {
-    await resend.emails.send({
-      from: "onboarding@resend.dev", // Replace with your verified Resend domain
-      to: "delivered@resend.dev", // Replace with your actual recipient email
+    const { data, error } = await resend.emails.send({
+      from: "DovoQA Contact Form <onboarding@resend.dev>", // Replace with your verified Resend domain
+      to: "hello@dovoqa.com", // Replace with your actual recipient email
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <p><strong>Name:</strong> ${name}</p>
@@ -24,9 +24,16 @@ export async function sendContactEmail(formData: FormData) {
         <p><strong>Message:</strong> ${message}</p>
       `,
     })
+
+    if (error) {
+      console.error("Resend email error:", error)
+      return { success: false, message: "Failed to send email. Please try again later." }
+    }
+
+    console.log("Email sent successfully:", data)
     return { success: true, message: "Your message has been sent successfully!" }
   } catch (error) {
-    console.error("Error sending email:", error)
-    return { success: false, message: "Failed to send message. Please try again later." }
+    console.error("Server action error:", error)
+    return { success: false, message: "An unexpected error occurred." }
   }
 }

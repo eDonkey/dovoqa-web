@@ -15,75 +15,59 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/components/ui/use-toast"
-import { sendContactEmail } from "@/app/actions/contact" // Reusing the contact action for simplicity
 
 export function EmailModalForm() {
   const [isOpen, setIsOpen] = useState(false)
   const [email, setEmail] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
-
-    const formData = new FormData()
-    formData.append("name", "Modal Subscriber") // Generic name for modal submissions
-    formData.append("email", email)
-    formData.append("message", "Subscription request from email modal.")
-
-    const result = await sendContactEmail(formData)
-
-    if (result.success) {
-      toast({
-        title: "Success!",
-        description: "Thank you for your interest! We will be in touch.",
-        variant: "success",
-      })
-      setEmail("")
-      setIsOpen(false)
-    } else {
-      toast({
-        title: "Error!",
-        description: result.message || "Failed to subscribe. Please try again.",
-        variant: "destructive",
-      })
-    }
-    setIsSubmitting(false)
+    // Here you would typically send the email to your backend or a service like Mailchimp
+    console.log("Submitting email:", email)
+    toast({
+      title: "Thank you for subscribing!",
+      description: "You'll receive updates from DovoQA soon.",
+      variant: "default",
+    })
+    setIsOpen(false)
+    setEmail("")
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="fixed bottom-4 right-4 bg-secondary text-white hover:bg-secondary/90 shadow-lg">
-          Subscribe for Updates
+        <Button
+          variant="link"
+          className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-foreground"
+        >
+          Subscribe to our Newsletter
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] dark:bg-gray-800 dark:text-gray-50">
+      <DialogContent className="sm:max-w-[425px] bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-50">
         <DialogHeader>
-          <DialogTitle className="text-primary">Stay Updated with DovoQA</DialogTitle>
-          <DialogDescription className="dark:text-gray-300">
-            Enter your email below to receive news, updates, and exclusive offers from DovoQA.
+          <DialogTitle className="text-primary">Subscribe to our Newsletter</DialogTitle>
+          <DialogDescription className="text-gray-700 dark:text-gray-300">
+            Stay up-to-date with the latest from DovoQA.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-          <div className="grid gap-2">
-            <Label htmlFor="email" className="text-lg">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="email" className="text-right text-gray-700 dark:text-gray-300">
               Email
             </Label>
             <Input
               id="email"
               type="email"
-              placeholder="your@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="your@example.com"
               required
-              className="dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50"
-              disabled={isSubmitting}
+              className="col-span-3"
             />
           </div>
-          <Button type="submit" className="bg-primary text-white hover:bg-primary/90" disabled={isSubmitting}>
-            {isSubmitting ? "Subscribing..." : "Subscribe"}
+          <Button type="submit" className="bg-secondary hover:bg-secondary/90 text-white">
+            Subscribe
           </Button>
         </form>
       </DialogContent>

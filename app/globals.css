@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@custom-variant dark (&:is(.dark *));
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -15,11 +13,11 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 220 80% 30%; /* A deep blue for primary elements */
+    --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 170 60% 40%; /* A vibrant teal for accents */
-    --secondary-foreground: 220 80% 15%; /* Darker shade for text on secondary */
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
@@ -34,20 +32,7 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
-    --chart-1: oklch(0.646 0.222 41.116);
-    --chart-2: oklch(0.6 0.118 184.704);
-    --chart-3: oklch(0.398 0.07 227.392);
-    --chart-4: oklch(0.828 0.189 84.429);
-    --chart-5: oklch(0.769 0.188 70.08);
     --radius: 0.5rem;
-    --sidebar: oklch(1 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
   }
 
   .dark {
@@ -60,11 +45,11 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 200 80% 60%; /* Lighter blue for dark mode primary */
-    --primary-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 170 60% 50%; /* Lighter teal for dark mode secondary */
-    --secondary-foreground: 200 80% 10%; /* Darker shade for text on secondary */
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
@@ -81,319 +66,66 @@
   }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --font-sans: var(--font-outfit);
-}
-
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
   }
 }
 
-/* Custom animations */
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Custom colors for DovoQA */
+.text-primary {
+  color: #0f172a; /* Dark Slate Blue */
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.dark .text-primary {
+  color: #e2e8f0; /* Light Slate */
 }
 
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.bg-primary {
+  background-color: #0f172a; /* Dark Slate Blue */
 }
 
-@keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.dark .bg-primary {
+  background-color: #1a202c; /* Darker Slate */
 }
 
-@keyframes slide-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.bg-secondary {
+  background-color: #00b8d4; /* Teal */
 }
 
-@keyframes slide-in-right {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.dark .bg-secondary {
+  background-color: #00838f; /* Darker Teal */
 }
 
-@keyframes slide-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.text-secondary {
+  color: #00b8d4; /* Teal */
 }
 
-@keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.dark .text-secondary {
+  color: #00838f; /* Darker Teal */
 }
 
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+.from-primary {
+  --tw-gradient-from: #0f172a var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(15 23 42 / 0) var(--tw-gradient-to-position);
 }
 
-@keyframes blink {
-  0%,
-  50% {
-    opacity: 1;
-  }
-  51%,
-  100% {
-    opacity: 0;
-  }
+.to-teal-600 {
+  --tw-gradient-to: #00b8d4 var(--tw-gradient-to-position);
 }
 
-@keyframes progress-bar {
-  from {
-    width: 0%;
-  }
-  to {
-    width: 85%;
-  }
+.dark .from-primary {
+  --tw-gradient-from: #1a202c var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(26 32 44 / 0) var(--tw-gradient-to-position);
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+.dark .to-teal-600 {
+  --tw-gradient-to: #00838f var(--tw-gradient-to-position);
 }
 
-@keyframes float-delayed {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
-}
-
-@keyframes bounce-slow {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes pulse-slow {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-@keyframes twinkle {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.1);
-  }
-}
-
-.animate-spin-slow {
-  animation: spin-slow 3s linear infinite;
-}
-
-.animate-fade-in {
-  animation: fade-in 1s ease-out;
-}
-
-.animate-fade-in-up {
-  animation: fade-in-up 1s ease-out;
-}
-
-.animate-slide-up {
-  animation: slide-up 1s ease-out 0.3s both;
-}
-
-.animate-slide-in-left {
-  animation: slide-in-left 0.8s ease-out both;
-}
-
-.animate-slide-in-right {
-  animation: slide-in-right 0.8s ease-out both;
-}
-
-.animate-slide-in-up {
-  animation: slide-in-up 0.8s ease-out both;
-}
-
-.animate-scale-in {
-  animation: scale-in 0.8s ease-out both;
-}
-
-.animate-typing {
-  animation: typing 2s steps(30) 1s both;
-}
-
-.animate-blink {
-  animation: blink 1s infinite;
-}
-
-.animate-progress-bar {
-  animation: progress-bar 3s ease-out 1s both;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-float-delayed {
-  animation: float-delayed 8s ease-in-out infinite 2s;
-}
-
-.animate-bounce-slow {
-  animation: bounce-slow 2s ease-in-out infinite;
-}
-
-.animate-pulse-slow {
-  animation: pulse-slow 3s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-
-.animate-twinkle {
-  animation: twinkle 2s ease-in-out infinite;
-}
-
-/* Delay utilities */
-.delay-100 {
-  animation-delay: 0.1s;
-}
-
-.delay-200 {
-  animation-delay: 0.2s;
-}
-
-.delay-300 {
-  animation-delay: 0.3s;
-}
-
-.delay-400 {
-  animation-delay: 0.4s;
-}
-
-.delay-500 {
-  animation-delay: 0.5s;
+.bg-gray-850 {
+  background-color: #1f2937; /* Custom dark gray for sections */
 }

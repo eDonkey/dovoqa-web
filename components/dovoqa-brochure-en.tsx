@@ -1,20 +1,54 @@
 "use client"
 
 import Image from "next/image"
-import { Mail, Phone, ShieldCheck, DollarSign, Scale, CheckCircle } from "lucide-react"
+import { Mail, Phone, ShieldCheck, DollarSign, Scale, CheckCircle, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useRef } from "react"
+import html2canvas from "html2canvas"
+import jsPDF from "jspdf"
 
 export default function DovoqaBrochureEn() {
+  const brochureRef = useRef<HTMLDivElement>(null)
+
+  const handleDownloadPdf = async () => {
+    if (brochureRef.current) {
+      const canvas = await html2canvas(brochureRef.current, { scale: 2 }) // Scale for better resolution
+      const imgData = canvas.toDataURL("image/png")
+      const pdf = new jsPDF("p", "mm", "a4")
+      const imgWidth = 210 // A4 width in mm
+      const pageHeight = 297 // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
+      let heightLeft = imgHeight
+
+      let position = 0
+
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight)
+      heightLeft -= pageHeight
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight
+        pdf.addPage()
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight)
+        heightLeft -= pageHeight
+      }
+
+      pdf.save("dovoqa-brochure-en.pdf")
+    }
+  }
+
   return (
-    <div className="font-sans bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 min-h-screen p-8">
+    <div
+      ref={brochureRef}
+      className="font-sans bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 min-h-screen p-8"
+    >
       {/* Header */}
       <header className="flex items-center justify-between py-6 px-8 bg-white dark:bg-gray-800 shadow-md rounded-lg mb-8">
         <div className="flex items-center space-x-4">
           <Image src="/images/dovoqa-logo.png" alt="DovoQA Logo" width={60} height={60} className="rounded-full" />
           <h1 className="text-3xl font-bold text-primary">DovoQA</h1>
         </div>
-        <nav>
+        <nav className="flex items-center space-x-6">
           <ul className="flex space-x-6">
             <li>
               <a href="#services" className="text-lg font-medium hover:text-primary transition-colors">
@@ -32,6 +66,10 @@ export default function DovoqaBrochureEn() {
               </a>
             </li>
           </ul>
+          <Button onClick={handleDownloadPdf} className="flex items-center gap-2">
+            <Download className="h-5 w-5" />
+            Download PDF
+          </Button>
         </nav>
       </header>
 
