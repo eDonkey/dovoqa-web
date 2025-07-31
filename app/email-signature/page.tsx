@@ -1,212 +1,118 @@
-import type { Metadata } from "next"
+"use client"
 
-export const metadata: Metadata = {
-  title: "Email Signature - Dovoqa",
-  description: "Professional email signature for Dovoqa team members",
-}
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 
-export default function EmailSignaturePage() {
+export default function EmailSignatureGenerator() {
+  const [name, setName] = useState("Your Name")
+  const [title, setTitle] = useState("Your Title")
+  const [company, setCompany] = useState("Your Company")
+  const [phone, setPhone] = useState("+1 (123) 456-7890")
+  const [email, setEmail] = useState("your.email@example.com")
+  const [website, setWebsite] = useState("www.example.com")
+  const [address, setAddress] = useState("123 Main St, Anytown, USA")
+  const [linkedin, setLinkedin] = useState("yourlinkedin")
+  const [twitter, setTwitter] = useState("yourtwitter")
+  const [facebook, setFacebook] = useState("yourfacebook")
+
+  const generateHtmlSignature = () => {
+    return `
+      <div style="font-family: Arial, sans-serif; font-size: 12px; color: #333;">
+        <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; max-width: 400px;">
+          <tr>
+            <td style="padding-right: 10px; vertical-align: top;">
+              <img src="https://via.placeholder.com/80x80" alt="Logo" width="80" height="80" style="display: block; border-radius: 50%;">
+            </td>
+            <td style="vertical-align: top;">
+              <p style="margin: 0; font-size: 14px; font-weight: bold; color: #007bff;">${name}</p>
+              <p style="margin: 0; color: #555;">${title}</p>
+              <p style="margin: 0; color: #555;">${company}</p>
+              <p style="margin: 0; line-height: 1.5;">
+                <span style="color: #007bff;">&#9742;</span> <a href="tel:${phone}" style="color: #333; text-decoration: none;">${phone}</a><br>
+                <span style="color: #007bff;">&#9993;</span> <a href="mailto:${email}" style="color: #333; text-decoration: none;">${email}</a><br>
+                <span style="color: #007bff;">&#127760;</span> <a href="http://${website}" target="_blank" style="color: #333; text-decoration: none;">${website}</a><br>
+                <span style="color: #007bff;">&#128205;</span> ${address}
+              </p>
+              <p style="margin: 5px 0 0 0;">
+                ${linkedin ? `<a href="https://linkedin.com/in/${linkedin}" target="_blank" style="text-decoration: none; margin-right: 5px;"><img src="https://via.placeholder.com/20x20/007bff/ffffff?text=L" alt="LinkedIn" width="20" height="20" style="vertical-align: middle;"></a>` : ""}
+                ${twitter ? `<a href="https://twitter.com/${twitter}" target="_blank" style="text-decoration: none; margin-right: 5px;"><img src="https://via.placeholder.com/20x20/1DA1F2/ffffff?text=T" alt="Twitter" width="20" height="20" style="vertical-align: middle;"></a>` : ""}
+                ${facebook ? `<a href="https://facebook.com/${facebook}" target="_blank" style="text-decoration: none;"><img src="https://via.placeholder.com/20x20/1877F2/ffffff?text=F" alt="Facebook" width="20" height="20" style="vertical-align: middle;"></a>` : ""}
+              </p>
+            </td>
+          </tr>
+        </table>
+      </div>
+    `
+  }
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text)
+    alert("Signature copied to clipboard!")
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-8">Dovoqa Email Signatures</h1>
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6">Email Signature Generator</h1>
 
-          {/* Full Signature */}
-          <div className="bg-white rounded-lg shadow-md p-8 mb-8">
-            <h2 className="text-xl font-semibold mb-4">Full Email Signature</h2>
-            <div className="border-2 border-dashed border-gray-300 p-6 mb-4">
-              <div
-                style={{
-                  fontFamily:
-                    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif',
-                  lineHeight: "1.4",
-                  color: "#333",
-                }}
-              >
-                <table style={{ borderCollapse: "collapse" }}>
-                  <tbody>
-                    <tr>
-                      <td style={{ paddingRight: "15px", verticalAlign: "top" }}>
-                        <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="50" cy="50" r="45" fill="#2563eb" stroke="#1d4ed8" strokeWidth="2" />
-                          <path
-                            d="M35 35 L45 25 L55 35 L65 25 L75 35 L65 45 L75 55 L65 65 L55 55 L45 65 L35 55 L45 45 Z"
-                            fill="white"
-                          />
-                          <circle cx="50" cy="50" r="8" fill="#2563eb" />
-                        </svg>
-                      </td>
-                      <td style={{ verticalAlign: "top" }}>
-                        <div style={{ fontSize: "18px", fontWeight: "600", color: "#1a1a1a", margin: "0 0 2px 0" }}>
-                          Axel
-                        </div>
-                        <div style={{ fontSize: "14px", color: "#666", margin: "0 0 8px 0" }}>Founder & QA Lead</div>
-                        <div style={{ fontSize: "16px", fontWeight: "600", color: "#2563eb", margin: "0 0 8px 0" }}>
-                          dovoqa.com
-                        </div>
-
-                        <div style={{ fontSize: "13px", color: "#666" }}>
-                          📧{" "}
-                          <a href="mailto:axel@dovoqa.com" style={{ color: "#2563eb", textDecoration: "none" }}>
-                            axel@dovoqa.com
-                          </a>
-                          <br />📱{" "}
-                          <a href="tel:+5491132346592" style={{ color: "#2563eb", textDecoration: "none" }}>
-                            +54 9 11 3234 6592
-                          </a>
-                          <br />🌐{" "}
-                          <a href="https://dovoqa.com" style={{ color: "#2563eb", textDecoration: "none" }}>
-                            dovoqa.com
-                          </a>
-                          <br />📍 CABA, Buenos Aires, Argentina
-                        </div>
-
-                        <div style={{ margin: "8px 0", height: "1px", background: "#e5e7eb" }}></div>
-                        <div style={{ fontSize: "12px", color: "#888", fontStyle: "italic" }}>
-                          Quality Assurance as a Service for Software Development
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="bg-gray-100 p-4 rounded">
-              <h3 className="font-semibold mb-2">HTML Code (Copy this for your email client):</h3>
-              <textarea
-                className="w-full h-40 p-2 text-sm font-mono border rounded"
-                readOnly
-                value={`<table style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; line-height: 1.4; color: #333; border-collapse: collapse;">
-  <tr>
-    <td style="padding-right: 15px; vertical-align: top;">
-      <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="45" fill="#2563eb" stroke="#1d4ed8" strokeWidth="2"/>
-        <path d="M35 35 L45 25 L55 35 L65 25 L75 35 L65 45 L75 55 L65 65 L55 55 L45 65 L35 55 L45 45 Z" fill="white"/>
-        <circle cx="50" cy="50" r="8" fill="#2563eb"/>
-      </svg>
-    </td>
-    <td style="vertical-align: top;">
-      <div style="font-size: 18px; font-weight: 600; color: #1a1a1a; margin: 0 0 2px 0;">Axel</div>
-      <div style="font-size: 14px; color: #666; margin: 0 0 8px 0;">Founder & QA Lead</div>
-      <div style="font-size: 16px; font-weight: 600; color: #2563eb; margin: 0 0 8px 0;">dovoqa.com</div>
-      <div style="font-size: 13px; color: #666;">
-        📧 <a href="mailto:axel@dovoqa.com" style="color: #2563eb; text-decoration: none;">axel@dovoqa.com</a><br>
-        📱 <a href="tel:+5491132346592" style="color: #2563eb; text-decoration: none;">+54 9 11 3234 6592</a><br>
-        🌐 <a href="https://dovoqa.com" style="color: #2563eb; text-decoration: none;">dovoqa.com</a><br>
-        📍 CABA, Buenos Aires, Argentina
-      </div>
-      <div style="margin: 8px 0; height: 1px; background: #e5e7eb;"></div>
-      <div style="font-size: 12px; color: #888; font-style: italic;">Quality Assurance as a Service for Software Development</div>
-    </td>
-  </tr>
-</table>`}
-              />
-            </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Input Form */}
+        <div className="space-y-4">
+          <div>
+            <Label htmlFor="name">Name</Label>
+            <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
-
-          {/* Simple Signature */}
-          <div className="bg-white rounded-lg shadow-md p-8">
-            <h2 className="text-xl font-semibold mb-4">Simple Email Signature</h2>
-            <div className="border-2 border-dashed border-gray-300 p-6 mb-4">
-              <table
-                style={{ fontFamily: "Arial, sans-serif", fontSize: "13px", color: "#333", borderCollapse: "collapse" }}
-              >
-                <tbody>
-                  <tr>
-                    <td style={{ paddingRight: "15px", verticalAlign: "top" }}>
-                      <div
-                        style={{
-                          width: "40px",
-                          height: "40px",
-                          background: "#2563eb",
-                          borderRadius: "50%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          color: "white",
-                          fontWeight: "bold",
-                          fontSize: "16px",
-                        }}
-                      >
-                        D
-                      </div>
-                    </td>
-                    <td style={{ verticalAlign: "top" }}>
-                      <div style={{ fontSize: "16px", fontWeight: "bold", color: "#1a1a1a", marginBottom: "2px" }}>
-                        Axel
-                      </div>
-                      <div style={{ color: "#666", marginBottom: "6px" }}>Founder & QA Lead | dovoqa.com</div>
-                      <div style={{ fontSize: "12px", color: "#666" }}>
-                        📧{" "}
-                        <a href="mailto:axel@dovoqa.com" style={{ color: "#2563eb", textDecoration: "none" }}>
-                          axel@dovoqa.com
-                        </a>{" "}
-                        | 📱{" "}
-                        <a href="tel:+5491132346592" style={{ color: "#2563eb", textDecoration: "none" }}>
-                          +54 9 11 3234 6592
-                        </a>
-                        <br />🌐{" "}
-                        <a href="https://dovoqa.com" style={{ color: "#2563eb", textDecoration: "none" }}>
-                          dovoqa.com
-                        </a>{" "}
-                        | 📍 Buenos Aires, Argentina
-                      </div>
-                      <div style={{ fontSize: "11px", color: "#888", fontStyle: "italic", marginTop: "6px" }}>
-                        Quality Assurance as a Service for Software Development
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div className="bg-gray-100 p-4 rounded">
-              <h3 className="font-semibold mb-2">HTML Code (Copy this for your email client):</h3>
-              <textarea
-                className="w-full h-32 p-2 text-sm font-mono border rounded"
-                readOnly
-                value={`<table style="font-family: Arial, sans-serif; font-size: 13px; color: #333; border-collapse: collapse;">
-  <tr>
-    <td style="padding-right: 15px; vertical-align: top;">
-      <div style="width: 40px; height: 40px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px;">D</div>
-    </td>
-    <td style="vertical-align: top;">
-      <div style="font-size: 16px; font-weight: bold; color: #1a1a1a; margin-bottom: 2px;">Axel</div>
-      <div style="color: #666; margin-bottom: 6px;">Founder & QA Lead | dovoqa.com</div>
-      <div style="font-size: 12px; color: #666;">
-        📧 <a href="mailto:axel@dovoqa.com" style="color: #2563eb; text-decoration: none;">axel@dovoqa.com</a> | 
-        📱 <a href="tel:+5491132346592" style="color: #2563eb; text-decoration: none;">+54 9 11 3234 6592</a><br>
-        🌐 <a href="https://dovoqa.com" style="color: #2563eb; text-decoration: none;">dovoqa.com</a> | 
-        📍 Buenos Aires, Argentina
-      </div>
-      <div style="font-size: 11px; color: #888; font-style: italic; margin-top: 6px;">Quality Assurance as a Service for Software Development</div>
-    </td>
-  </tr>
-</table>`}
-              />
-            </div>
+          <div>
+            <Label htmlFor="title">Title</Label>
+            <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
           </div>
-
-          {/* Instructions */}
-          <div className="bg-blue-50 rounded-lg p-6 mt-8">
-            <h3 className="text-lg font-semibold mb-3">How to Use These Signatures:</h3>
-            <div className="space-y-2 text-sm">
-              <p>
-                <strong>Gmail:</strong> Settings → General → Signature → Paste HTML code
-              </p>
-              <p>
-                <strong>Outlook:</strong> File → Options → Mail → Signatures → New → Paste HTML code
-              </p>
-              <p>
-                <strong>Apple Mail:</strong> Mail → Preferences → Signatures → Copy and paste the rendered signature
-              </p>
-              <p>
-                <strong>Other clients:</strong> Look for HTML signature option and paste the code
-              </p>
-            </div>
+          <div>
+            <Label htmlFor="company">Company</Label>
+            <Input id="company" value={company} onChange={(e) => setCompany(e.target.value)} />
           </div>
+          <div>
+            <Label htmlFor="phone">Phone</Label>
+            <Input id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+          </div>
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div>
+            <Label htmlFor="website">Website</Label>
+            <Input id="website" value={website} onChange={(e) => setWebsite(e.target.value)} />
+          </div>
+          <div>
+            <Label htmlFor="address">Address</Label>
+            <Input id="address" value={address} onChange={(e) => setAddress(e.target.value)} />
+          </div>
+          <div>
+            <Label htmlFor="linkedin">LinkedIn Username</Label>
+            <Input id="linkedin" value={linkedin} onChange={(e) => setLinkedin(e.target.value)} />
+          </div>
+          <div>
+            <Label htmlFor="twitter">Twitter Username</Label>
+            <Input id="twitter" value={twitter} onChange={(e) => setTwitter(e.target.value)} />
+          </div>
+          <div>
+            <Label htmlFor="facebook">Facebook Username</Label>
+            <Input id="facebook" value={facebook} onChange={(e) => setFacebook(e.target.value)} />
+          </div>
+        </div>
+
+        {/* Preview and HTML Output */}
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">Preview</h2>
+          <div
+            className="border p-4 rounded-md bg-gray-50"
+            dangerouslySetInnerHTML={{ __html: generateHtmlSignature() }}
+          />
+
+          <h2 className="text-2xl font-bold">HTML Code</h2>
+          <Textarea value={generateHtmlSignature()} readOnly rows={15} className="font-mono text-sm bg-gray-50" />
+          <Button onClick={() => copyToClipboard(generateHtmlSignature())}>Copy HTML to Clipboard</Button>
         </div>
       </div>
     </div>

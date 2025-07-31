@@ -4,74 +4,36 @@ import { Resend } from "resend"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-export async function submitContactForm(prevState: any, formData: FormData) {
-  // Check if formData exists
-  if (!formData) {
-    return {
-      success: false,
-      error: "Form data is missing. Please try again.",
-    }
+export async function sendContactEmail(formData: FormData) {
+  const name = formData.get("name") as string
+  const email = formData.get("email") as string
+  const message = formData.get("message") as string
+
+  if (!name || !email || !message) {
+    return { success: false, message: "Please fill in all fields." }
   }
 
   try {
-    const firstName = formData.get("firstName") as string
-    const lastName = formData.get("lastName") as string
-    const email = formData.get("email") as string
-    const company = formData.get("company") as string
-    const message = formData.get("message") as string
-
-    // Validate required fields
-    if (!firstName || !lastName || !email || !message) {
-      return {
-        success: false,
-        error: "Please fill in all required fields.",
-      }
-    }
-
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      return {
-        success: false,
-        error: "Please enter a valid email address.",
-      }
-    }
-
-    // Send email using Resend
     const { data, error } = await resend.emails.send({
-      from: "Dovoqa Contact Form <onboarding@webmailer.dovoqa.com>", // Updated from address
-      to: ["hello@dovoqa.com"], // Your recipient email
-      subject: `New Contact Form Submission from ${firstName} ${lastName}`,
+      from: "DovoQA Contact Form <onboarding@resend.dev>", // Replace with your verified Resend domain
+      to: "hello@dovoqa.com", // Your actual recipient email
+      subject: `New Contact Form Submission from ${name}`,
       html: `
-        <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+        <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Company:</strong> ${company || "Not provided"}</p>
-        <br>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
+        <p><strong>Message:</strong> ${message}</p>
       `,
     })
 
     if (error) {
       console.error("Resend email error:", error)
-      return {
-        success: false,
-        error: `Failed to send message: ${error.message || "Unknown error"}`,
-      }
+      return { success: false, message: "Failed to send email. Please try again later." }
     }
 
-    console.log("Email sent successfully via Resend:", data)
-
-    return {
-      success: true,
-      message: "Thank you for your message! We'll get back to you within 24 hours.",
-    }
+    console.log("Email sent successfully:", data)
+    return { success: true, message: "Your message has been sent successfully!" }
   } catch (error) {
-    console.error("Error processing form:", error)
-    return {
-      success: false,
-      error:
-        "Sorry, there was an error sending your message. Please try again or contact us directly at hello@dovoqa.com.",
-    }
+    console.error("Server action error:", error)
+    return { success: false, message: "An unexpected error occurred." }
   }
 }

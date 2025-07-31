@@ -1,173 +1,305 @@
+"use client"
+
+import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Bug, MapPin, Mail } from "lucide-react"
+import { Card, CardContent, CardTitle } from "@/components/ui/card"
+import { Mail, MapPin, CheckCircle, Lightbulb, Users, DollarSign, Clock, Award, Star } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { WhatsAppIcon } from "@/components/whatsapp-icon"
-import { EmailModalForm } from "@/components/email-modal-form" // Import the new component
+import { ContactForm } from "@/components/contact-form"
+import { EmailModalForm } from "@/components/email-modal-form"
+import { useEffect, useState } from "react"
+import { useToast } from "@/components/ui/use-toast"
+import { Analytics } from "@vercel/analytics/react"
+import WhatsAppIcon from "@/components/whatsapp-icon" // Import the WhatsAppIcon component
 
 export default function Home() {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 flex flex-col">
-      {/* Header */}
-      <header className="border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-40">
-        <div className="container flex h-16 items-center justify-between py-4">
-          <div className="flex items-center gap-2">
-            <div className="relative">
-              <Bug className="h-6 w-6 text-primary animate-pulse" />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-ping"></div>
-            </div>
-            <span className="text-xl font-bold tracking-tight">dovoqa.com</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <ThemeToggle />
-            <Link href="#contact">
-              <Button variant="outline" className="bg-transparent font-medium">
+  const [isUnderConstruction, setIsUnderConstruction] = useState(false)
+  const { toast } = useToast()
+
+  useEffect(() => {
+    // Check for NEXT_PUBLIC_UNDER_CONSTRUCTION environment variable
+    if (process.env.NEXT_PUBLIC_UNDER_CONSTRUCTION === "true") {
+      setIsUnderConstruction(true)
+      toast({
+        title: "Under Construction",
+        description: "This site is currently under construction. Please check back later!",
+        duration: 5000,
+      })
+    }
+  }, [toast])
+
+  if (isUnderConstruction) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 text-white p-4">
+        <div className="text-center space-y-6">
+          <Image
+            src="/placeholder-logo.png"
+            alt="DovoQA Logo"
+            width={200}
+            height={200}
+            className="mx-auto animate-pulse"
+          />
+          <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl">DovoQA</h1>
+          <p className="mt-3 text-xl sm:text-2xl md:text-3xl text-gray-300">
+            Our website is currently under construction.
+          </p>
+          <p className="mt-2 text-lg text-gray-400">We're working hard to bring you a better experience!</p>
+          <div className="flex justify-center space-x-4 mt-6">
+            <Link href="mailto:info@dovoqa.com" passHref>
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105">
                 Contact Us
+              </Button>
+            </Link>
+            <Link href="tel:+1234567890" passHref>
+              <Button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105">
+                Call Us
               </Button>
             </Link>
           </div>
         </div>
-      </header>
+      </div>
+    )
+  }
 
-      {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          {/* Animated Construction Icon */}
-          <div className="relative mx-auto w-32 h-32 mb-8">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full animate-spin-slow opacity-20"></div>
-            <div className="absolute inset-2 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full animate-pulse"></div>
-            <div className="absolute inset-4 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center">
-              <div className="relative">
-                <Bug className="h-12 w-12 text-blue-600 animate-bounce" />
-                <div className="absolute -top-2 -right-2 w-6 h-6">
-                  <div className="w-full h-full bg-yellow-400 rounded-full animate-ping"></div>
-                  <div className="absolute inset-1 bg-yellow-500 rounded-full"></div>
-                </div>
+  return (
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
+      <Analytics />
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+          <Link className="flex items-center gap-2" href="#">
+            <Image src="/placeholder-logo.png" alt="DovoQA Logo" width={40} height={40} className="rounded-full" />
+            <span className="text-lg font-semibold">DovoQA</span>
+          </Link>
+          <nav className="hidden space-x-4 md:flex">
+            <Link className="font-medium hover:underline underline-offset-4" href="#services">
+              Our Services
+            </Link>
+            <Link className="font-medium hover:underline underline-offset-4" href="#process">
+              Process
+            </Link>
+            <Link className="font-medium hover:underline underline-offset-4" href="#benefits">
+              Benefits
+            </Link>
+            <Link className="font-medium hover:underline underline-offset-4" href="#contact">
+              Contact Us
+            </Link>
+          </nav>
+          <ThemeToggle />
+        </div>
+      </header>
+      <main className="flex-1">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-r from-purple-500 to-indigo-600 text-white flex items-center justify-center">
+          <div className="container px-4 md:px-6 text-center">
+            <div className="space-y-4">
+              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none animate-fade-in-up">
+                Elevate Your Software Quality with DovoQA
+              </h1>
+              <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl animate-fade-in-up delay-200">
+                Comprehensive Quality Assurance as a Service (QAaaS) for flawless software delivery.
+              </p>
+              <div className="space-x-4 animate-fade-in-up delay-400">
+                <Button className="inline-flex h-10 items-center justify-center rounded-md bg-white text-purple-600 px-8 text-sm font-medium shadow transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50">
+                  Get a Quote
+                </Button>
+                <Button className="inline-flex h-10 items-center justify-center rounded-md border border-white bg-transparent text-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-white hover:text-purple-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50">
+                  Learn More
+                </Button>
               </div>
             </div>
           </div>
+        </section>
 
-          {/* Main Heading */}
-          <div className="space-y-4">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-800 bg-clip-text text-transparent animate-fade-in">
-              We're Building Something Amazing
-            </h1>
-            <div className="flex items-center justify-center gap-2 text-lg md:text-xl text-muted-foreground">
-              <span className="animate-typing font-medium">Quality Assurance as a Service</span>
-              <div className="w-0.5 h-6 bg-blue-600 animate-blink"></div>
+        <section id="services" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl animate-fade-in-up">Our Services</h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 animate-fade-in-up delay-200">
+                  We offer a wide range of QA services to ensure your software meets the highest standards.
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
+                <CheckCircle className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Manual Testing</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Thorough manual testing to identify critical bugs and ensure user satisfaction.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-400">
+                <Lightbulb className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Automation Testing</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Automated test suites for faster feedback and efficient regression testing.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-500">
+                <Users className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Performance Testing</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Ensure your application performs optimally under various load conditions.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-600">
+                <DollarSign className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Security Testing</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Identify vulnerabilities and protect your application from potential threats.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-700">
+                <Clock className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Consulting & Strategy</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Expert guidance to build a robust QA strategy tailored to your development lifecycle.
+                </CardContent>
+              </Card>
             </div>
           </div>
+        </section>
 
-          {/* Description */}
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed animate-slide-up font-light">
-            Our team is working hard to bring you the best QA services for your software development needs. We'll be
-            launching soon with comprehensive testing solutions that will elevate your software quality.
-          </p>
-
-          {/* Progress Bar */}
-          <div className="max-w-md mx-auto">
-            <div className="flex justify-between text-sm text-muted-foreground mb-2 font-medium">
-              <span>Progress</span>
-              <span>85%</span>
+        <section id="process" className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-900">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl animate-fade-in-up">Our Process</h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 animate-fade-in-up delay-200">
+                  Our streamlined process ensures efficient and effective quality assurance.
+                </p>
+              </div>
             </div>
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full animate-progress-bar"></div>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-1 lg:grid-cols-3">
+              <Card className="flex flex-col items-center p-6 text-center bg-gray-50 dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
+                <Award className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">1. Discovery & Planning</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  We start by understanding your project, requirements, and goals to create a tailored QA plan.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-gray-50 dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-400">
+                <Star className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">2. Execution & Reporting</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Our QA experts execute the test plan, providing regular updates and detailed reports.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-gray-50 dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-500">
+                <CheckCircle className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">3. Continuous Improvement</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  We continuously refine our approach based on feedback and evolving project needs.
+                </CardContent>
+              </Card>
             </div>
           </div>
+        </section>
 
-          {/* Coming Soon Badge */}
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-200 dark:border-blue-800 rounded-full">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-sm font-medium text-blue-700 dark:text-blue-300">Launching Soon - Stay Tuned!</span>
-          </div>
-
-          {/* Floating Elements */}
-          <div className="absolute top-20 left-10 w-4 h-4 bg-blue-400 rounded-full animate-float opacity-60"></div>
-          <div className="absolute top-40 right-20 w-6 h-6 bg-indigo-400 rounded-full animate-float-delayed opacity-40"></div>
-          <div className="absolute bottom-40 left-20 w-3 h-3 bg-purple-400 rounded-full animate-float opacity-50"></div>
-          <div className="absolute bottom-60 right-10 w-5 h-5 bg-blue-500 rounded-full animate-float-delayed opacity-30"></div>
-        </div>
-      </main>
-
-      {/* Contact Section */}
-      <section
-        id="contact"
-        className="bg-gradient-to-br from-indigo-50/50 via-blue-50/30 to-purple-50/50 dark:from-indigo-900/20 dark:via-blue-900/10 dark:to-purple-900/20 backdrop-blur-sm border-t py-12"
-      >
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center space-y-8">
-            <div className="animate-fade-in-up">
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 bg-clip-text text-transparent">
-                Get in Touch
-              </h2>
-              <p className="text-muted-foreground font-light">
-                Have questions or want to be notified when we launch? We'd love to hear from you!
-              </p>
+        <section id="benefits" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl animate-fade-in-up">
+                  Benefits of QAaaS
+                </h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 animate-fade-in-up delay-200">
+                  Partnering with DovoQA brings numerous advantages to your software development lifecycle.
+                </p>
+              </div>
             </div>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
+                <CheckCircle className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Cost Efficiency</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Reduce overheads associated with in-house QA teams and infrastructure.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-400">
+                <Lightbulb className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Expertise On-Demand</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Access a team of seasoned QA professionals with diverse industry experience.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-500">
+                <Users className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Faster Time-to-Market</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Accelerate your release cycles with efficient and scalable testing processes.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-600">
+                <DollarSign className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Improved Quality</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Deliver high-quality, bug-free software that delights your users.
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-700">
+                <Clock className="h-12 w-12 text-purple-600 mb-4" />
+                <CardTitle className="text-xl font-semibold mb-2">Scalability</CardTitle>
+                <CardContent className="text-gray-600 dark:text-gray-400">
+                  Easily scale your QA efforts up or down based on project demands.
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              {/* Email Contact - Now triggers modal */}
-              <EmailModalForm />
-
-              <div className="flex flex-col items-center space-y-3 p-6 rounded-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-green-200/50 dark:border-green-800/50 hover:shadow-lg transition-all duration-300 hover:scale-105 animate-slide-in-up delay-200">
-                <div className="p-3 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-full animate-pulse-slow">
-                  <WhatsAppIcon className="h-6 w-6 text-green-600" />
+        <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-900">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl animate-fade-in-up">Contact Us</h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 animate-fade-in-up delay-200">
+                  Have questions or ready to start your QA journey? Reach out to us!
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-1 lg:grid-cols-2">
+              <div className="flex flex-col space-y-4">
+                <div className="flex items-center space-x-4">
+                  <Mail className="h-6 w-6 text-purple-600" />
+                  <Link href="mailto:info@dovoqa.com" className="text-gray-600 dark:text-gray-400 hover:underline">
+                    info@dovoqa.com
+                  </Link>
                 </div>
-                <div className="text-center">
-                  <p className="font-semibold text-green-800 dark:text-green-200">WhatsApp</p>
-                  <a
+                <div className="flex items-center space-x-4">
+                  <WhatsAppIcon className="h-6 w-6 text-purple-600" /> {/* Use WhatsAppIcon component */}
+                  <Link
                     href="https://wa.me/5491132346592"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground hover:text-green-600 transition-colors font-light"
+                    className="text-gray-600 dark:text-gray-400 hover:underline"
                   >
-                    +54 9 11 3234 6592
-                  </a>
+                    +54-9-11-3234-6592 (WhatsApp)
+                  </Link>
                 </div>
-              </div>
-
-              <div className="flex flex-col items-center space-y-3 p-6 rounded-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-purple-200/50 dark:border-purple-800/50 hover:shadow-lg transition-all duration-300 hover:scale-105 animate-slide-in-up delay-300">
-                <div className="p-3 bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 rounded-full animate-pulse-slow">
+                <div className="flex items-center space-x-4">
                   <MapPin className="h-6 w-6 text-purple-600" />
+                  <p className="text-gray-600 dark:text-gray-400">Remote - Global Reach</p>
                 </div>
-                <div className="text-center">
-                  <p className="font-semibold text-purple-800 dark:text-purple-200">Location</p>
-                  <p className="text-sm text-muted-foreground font-light">
-                    CABA, Buenos Aires
-                    <br />
-                    Argentina
-                  </p>
-                </div>
+                <EmailModalForm />
               </div>
-            </div>
-
-            <div className="pt-6 animate-fade-in-up delay-400">
-              <Button
-                size="lg"
-                className="px-8 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-300 shadow-lg font-medium"
-              >
-                <Mail className="mr-2 h-4 w-4" />
-                Contact Us Now
-              </Button>
+              <ContactForm />
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t bg-white/30 dark:bg-gray-900/30 backdrop-blur-sm py-6">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <Bug className="h-5 w-5 text-primary" />
-              <span className="font-semibold tracking-tight">dovoqa.com</span>
-              <span className="text-sm text-muted-foreground font-light">- Coming Soon</span>
-            </div>
-            <p className="text-sm text-muted-foreground font-light">
-              © {new Date().getFullYear()} Dovoqa. All rights reserved.
-            </p>
-          </div>
-        </div>
+        </section>
+      </main>
+      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t bg-gray-100 dark:bg-gray-800">
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          &copy; {new Date().getFullYear()} DovoQA. All rights reserved.
+        </p>
+        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+          <Link className="text-xs hover:underline underline-offset-4 text-gray-500 dark:text-gray-400" href="#">
+            Terms of Service
+          </Link>
+          <Link className="text-xs hover:underline underline-offset-4 text-gray-500 dark:text-gray-400" href="#">
+            Privacy
+          </Link>
+        </nav>
       </footer>
     </div>
   )
