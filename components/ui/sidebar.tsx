@@ -1,8 +1,10 @@
 "use client"
 
-import { SidebarSeparator } from "@/components/ui/sidebar"
+import React from "react"
 
-import * as React from "react"
+import { SidebarSeparator } from "@/components/ui/sidebar"
+import { Link } from "next-view-transitions"
+import { usePathname } from "next/navigation"
 import { Slot } from "@radix-ui/react-slot"
 import { type VariantProps, cva } from "class-variance-authority"
 import { PanelLeft } from "lucide-react"
@@ -13,6 +15,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { buttonVariants } from "@/components/ui/button"
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -536,6 +539,35 @@ const SidebarMenuSubButton = React.forwardRef<
   )
 })
 SidebarMenuSubButton.displayName = "SidebarMenuSubButton"
+
+interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
+  items: {
+    href: string
+    title: string
+  }[]
+}
+
+export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
+  const pathname = usePathname()
+
+  return (
+    <nav className={cn("flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1", className)} {...props}>
+      {items.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className={cn(
+            buttonVariants({ variant: "ghost" }),
+            pathname === item.href ? "bg-muted hover:bg-muted" : "hover:bg-transparent hover:underline",
+            "justify-start",
+          )}
+        >
+          {item.title}
+        </Link>
+      ))}
+    </nav>
+  )
+}
 
 export {
   Sidebar,

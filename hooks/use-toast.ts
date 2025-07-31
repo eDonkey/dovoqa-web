@@ -116,58 +116,61 @@ export const reducer = (state: State, action: Action): State => {
 
 const listeners: ((state: State) => void)[] = []
 
-let state: State = {
-  toasts: [],
-}
-
-function setState(action: Action) {
-  state = reducer(state, action)
-  listeners.forEach((listener) => listener(state))
-}
+let memoryState: State = { toasts: [] }
 
 function dispatch(action: Action) {
-  setState(action)
+  memoryState = reducer(memoryState, action)
+  listeners.forEach((listener) => listener(memoryState))
 }
 
-export function useToast() {
-  const [toasterState, setToasterState] = React.useState(state)
+type Toast = Omit<ToasterToast, "id">
+
+function toast({ ...props }: Toast) {
+  const id = genId()
+
+  const update = (props: ToasterToast) =>
+    dispatch({
+      type: actionTypes.UPDATE_TOAST,
+      toast: { ...props, id },
+    })
+  const dismiss = () => dispatch({ type: actionTypes.DISMISS_TOAST, toastId: id })
+
+  dispatch({
+    type: actionTypes.ADD_TOAST,
+    toast: {
+      ...props,
+      id,
+      open: true,
+      onOpenChange: (open) => {
+        if (!open) dismiss()
+      },
+    },
+  })
+
+  return {
+    id: id,
+    dismiss,
+    update,
+  }
+}
+
+function useToast() {
+  const [state, setState] = React.useState<State>(memoryState)
 
   React.useEffect(() => {
-    listeners.push(setToasterState)
+    listeners.push(setState)
     return () => {
-      const index = listeners.indexOf(setToasterState)
+      const index = listeners.indexOf(setState)
       if (index > -1) {
         listeners.splice(index, 1)
       }
     }
-  }, [toasterState])
+  }, [state])
 
   return {
-    ...toasterState,
-    toast: React.useCallback((props: ToasterToast) => {
-      const id = genId()
-      const update = (props: Partial<ToasterToast>) =>
-        dispatch({
-          type: actionTypes.UPDATE_TOAST,
-          toast: { ...props, id },
-        })
-      const dismiss = () => dispatch({ type: actionTypes.DISMISS_TOAST, toastId: id })
-      dispatch({
-        type: actionTypes.ADD_TOAST,
-        toast: {
-          ...props,
-          id,
-          open: true,
-          onOpenChange: (open) => {
-            if (!open) dismiss()
-          },
-        },
-      })
-      return {
-        id: id,
-        dismiss,
-        update,
-      }
-    }, []),
+    ...state,
+    toast,
   }
 }
+
+export { useToast, toast }

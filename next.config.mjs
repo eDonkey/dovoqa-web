@@ -27,6 +27,24 @@ const nextConfig = {
     ],
     unoptimized: true,
   },
+  webpack: (config, { isServer }) => {
+    // Add a rule to handle .tsx files as images for WhatsAppIcon
+    config.module.rules.push({
+      test: /\.tsx$/,
+      issuer: /\.(jsx?|tsx?)$/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: 'static/media/[name].[hash].[ext]',
+          },
+        },
+      ],
+      include: /components\/whatsapp-icon\.tsx$/, // Only apply to this specific file
+    });
+
+    return config;
+  },
 };
 
 export default nextConfig;

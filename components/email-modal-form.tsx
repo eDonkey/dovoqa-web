@@ -14,60 +14,66 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useToast } from "@/components/ui/use-toast"
+import { Textarea } from "@/components/ui/textarea"
 
 export function EmailModalForm() {
   const [isOpen, setIsOpen] = useState(false)
   const [email, setEmail] = useState("")
-  const { toast } = useToast()
+  const [message, setMessage] = useState("")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically send the email to your backend or a service like Mailchimp
-    console.log("Submitting email:", email)
-    toast({
-      title: "Thank you for subscribing!",
-      description: "You'll receive updates from DovoQA soon.",
-      variant: "default",
-    })
+    // Here you would typically send the email data to your backend
+    console.log("Email submitted:", { email, message })
+    alert("Thank you for your message! We will get back to you soon.")
     setIsOpen(false)
     setEmail("")
+    setMessage("")
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="link"
-          className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-foreground"
-        >
-          Subscribe to our Newsletter
+        <Button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105">
+          Email Us
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-50">
+      <DialogContent className="sm:max-w-[425px] p-6">
         <DialogHeader>
-          <DialogTitle className="text-primary">Subscribe to our Newsletter</DialogTitle>
-          <DialogDescription className="text-gray-700 dark:text-gray-300">
-            Stay up-to-date with the latest from DovoQA.
+          <DialogTitle className="text-2xl font-bold">Send us an Email</DialogTitle>
+          <DialogDescription className="text-gray-600 dark:text-gray-400">
+            Fill out the form below and we'll get back to you as soon as possible.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="email" className="text-right text-gray-700 dark:text-gray-300">
-              Email
+          <div className="grid gap-2">
+            <Label htmlFor="email" className="text-lg">
+              Your Email
             </Label>
             <Input
               id="email"
               type="email"
+              placeholder="your@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@example.com"
               required
-              className="col-span-3"
             />
           </div>
-          <Button type="submit" className="bg-secondary hover:bg-secondary/90 text-white">
-            Subscribe
+          <div className="grid gap-2">
+            <Label htmlFor="message" className="text-lg">
+              Message
+            </Label>
+            <Textarea
+              id="message"
+              placeholder="Your message..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              rows={5}
+              required
+            />
+          </div>
+          <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white">
+            Send Message
           </Button>
         </form>
       </DialogContent>

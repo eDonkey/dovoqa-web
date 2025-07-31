@@ -7,7 +7,7 @@ const config = {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
-    "*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}", // Tremor module
   ],
   prefix: "",
   theme: {
@@ -52,6 +52,14 @@ const config = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        // Custom DovoQA palette
+        dovoqa: {
+          primary: "#6B46C1", // A deep purple
+          secondary: "#38B2AC", // A vibrant teal
+          accent: "#F6AD55", // A warm orange
+          background: "#F7FAFC", // Light gray for backgrounds
+          text: "#2D3748", // Dark gray for text
         },
       },
       borderRadius: {

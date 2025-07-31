@@ -1,5 +1,7 @@
-import DovoqaBrochureEs from "@/components/dovoqa-brochure-es"
+"use client"
 
-export default function BrochureEsPage() {
-  return <DovoqaBrochureEs />
+import DovoQABrochureES from "@/components/dovoqa-brochure-es"
+
+export default function BrochureESPage() {
+  return <DovoQABrochureES />
 }

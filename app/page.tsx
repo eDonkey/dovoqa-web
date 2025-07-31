@@ -4,13 +4,14 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
-import { Mail, Phone, MapPin, CheckCircle, Lightbulb, Users, DollarSign, Clock, Award, Star } from "lucide-react"
+import { Mail, MapPin, CheckCircle, Lightbulb, Users, DollarSign, Clock, Award, Star } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { ContactForm } from "@/components/contact-form"
 import { EmailModalForm } from "@/components/email-modal-form"
 import { useEffect, useState } from "react"
 import { useToast } from "@/components/ui/use-toast"
 import { Analytics } from "@vercel/analytics/react"
+import WhatsAppIcon from "@/components/whatsapp-icon" // Import the WhatsAppIcon component
 
 export default function Home() {
   const [isUnderConstruction, setIsUnderConstruction] = useState(false)
@@ -80,11 +81,9 @@ export default function Home() {
             <Link className="font-medium hover:underline underline-offset-4" href="#benefits">
               Benefits
             </Link>
-            {/* Pricing link removed */}
             <Link className="font-medium hover:underline underline-offset-4" href="#contact">
               Contact Us
             </Link>
-            {/* Brochure links removed */}
           </nav>
           <ThemeToggle />
         </div>
@@ -249,8 +248,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Pricing section removed */}
-
         <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-900">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -270,9 +267,14 @@ export default function Home() {
                   </Link>
                 </div>
                 <div className="flex items-center space-x-4">
-                  <Phone className="h-6 w-6 text-purple-600" />
-                  <Link href="tel:+1234567890" className="text-gray-600 dark:text-gray-400 hover:underline">
-                    +1 (234) 567-890
+                  <WhatsAppIcon className="h-6 w-6 text-purple-600" /> {/* Use WhatsAppIcon component */}
+                  <Link
+                    href="https://wa.me/5491132346592"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 dark:text-gray-400 hover:underline"
+                  >
+                    +54-9-11-3234-6592 (WhatsApp)
                   </Link>
                 </div>
                 <div className="flex items-center space-x-4">
@@ -287,7 +289,9 @@ export default function Home() {
         </section>
       </main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t bg-gray-100 dark:bg-gray-800">
-        <p className="text-xs text-gray-500 dark:text-gray-400">&copy; 2024 DovoQA. All rights reserved.</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          &copy; {new Date().getFullYear()} DovoQA. All rights reserved.
+        </p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link className="text-xs hover:underline underline-offset-4 text-gray-500 dark:text-gray-400" href="#">
             Terms of Service
