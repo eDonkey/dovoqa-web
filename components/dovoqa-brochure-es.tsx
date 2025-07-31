@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { Mail, Phone, ShieldCheck, DollarSign, Scale, CheckCircle, Download } from "lucide-react"
+import { Mail, Phone, ShieldCheck, DollarSign, Scale, CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useRef } from "react"
@@ -52,29 +52,6 @@ export default function DovoqaBrochureEs() {
           <Image src="/images/dovoqa-logo.png" alt="Logo de DovoQA" width={60} height={60} className="rounded-full" />
           <h1 className="text-3xl font-bold text-primary">DovoQA</h1>
         </div>
-        <nav className="flex items-center space-x-6">
-          <ul className="flex space-x-6">
-            <li>
-              <a href="#services" className="text-lg font-medium hover:text-primary transition-colors">
-                Servicios
-              </a>
-            </li>
-            <li>
-              <a href="#benefits" className="text-lg font-medium hover:text-primary transition-colors">
-                Beneficios
-              </a>
-            </li>
-            <li>
-              <a href="#contact" className="text-lg font-medium hover:text-primary transition-colors">
-                Contacto
-              </a>
-            </li>
-          </ul>
-          <Button onClick={handleDownloadPdf} className="flex items-center gap-2">
-            <Download className="h-5 w-5" />
-            Descargar PDF
-          </Button>
-        </nav>
       </header>
 
       {/* Hero Section */}
