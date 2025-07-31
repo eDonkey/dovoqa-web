@@ -1,173 +1,605 @@
+"use client"
+
+import type React from "react"
+
+import { useState, useEffect } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Bug, MapPin, Mail } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
+import { useToast } from "@/components/ui/use-toast"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { sendContactEmail } from "@/app/actions/contact"
+import {
+  Mail,
+  Phone,
+  MapPin,
+  CheckCircle,
+  DollarSign,
+  Users,
+  Lightbulb,
+  Rocket,
+  Shield,
+  MessageCircle,
+  Code,
+  TrendingUp,
+  Zap,
+  Award,
+} from "lucide-react"
 import { WhatsAppIcon } from "@/components/whatsapp-icon"
-import { EmailModalForm } from "@/components/email-modal-form" // Import the new component
 
-export default function Home() {
+export default function LandingPage() {
+  const [isUnderConstruction, setIsUnderConstruction] = useState(false)
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { toast } = useToast()
+
+  useEffect(() => {
+    // Simulate checking for an "under construction" flag
+    // In a real app, this might come from an environment variable or CMS
+    const constructionMode = process.env.NEXT_PUBLIC_UNDER_CONSTRUCTION === "true"
+    setIsUnderConstruction(constructionMode)
+  }, [])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    const response = await sendContactEmail(new FormData(e.currentTarget))
+    if (response.success) {
+      toast({
+        title: "Success!",
+        description: response.message,
+        variant: "default",
+      })
+      setFormData({ name: "", email: "", message: "" })
+    } else {
+      toast({
+        title: "Error!",
+        description: response.message,
+        variant: "destructive",
+      })
+    }
+    setIsSubmitting(false)
+  }
+
+  if (isUnderConstruction) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 text-white p-4 text-center">
+        <Image src="/placeholder-logo.svg" alt="DovoQA Logo" width={150} height={150} className="mb-8 animate-pulse" />
+        <h1 className="text-5xl font-bold mb-4 animate-fade-in">Website Under Construction</h1>
+        <p className="text-xl mb-8 animate-slide-up">
+          We are working hard to bring you an amazing experience. Please check back soon!
+        </p>
+        <div className="flex space-x-4 animate-fade-in delay-300">
+          <Link href="mailto:info@dovoqa.com" passHref>
+            <Button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg">
+              <Mail className="mr-2 h-5 w-5" /> Contact Us
+            </Button>
+          </Link>
+          <Link href="tel:+15551234567" passHref>
+            <Button className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full shadow-lg">
+              <Phone className="mr-2 h-5 w-5" /> Call Us
+            </Button>
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 flex flex-col">
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
       {/* Header */}
-      <header className="border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-40">
-        <div className="container flex h-16 items-center justify-between py-4">
-          <div className="flex items-center gap-2">
-            <div className="relative">
-              <Bug className="h-6 w-6 text-primary animate-pulse" />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-ping"></div>
-            </div>
-            <span className="text-xl font-bold tracking-tight">dovoqa.com</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <ThemeToggle />
-            <Link href="#contact">
-              <Button variant="outline" className="bg-transparent font-medium">
-                Contact Us
-              </Button>
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+          <Link href="#" className="flex items-center gap-2" prefetch={false}>
+            <Image src="/placeholder-logo.svg" alt="DovoQA Logo" width={40} height={40} className="rounded-full" />
+            <span className="text-xl font-bold">DovoQA</span>
+          </Link>
+          <nav className="hidden space-x-4 md:flex">
+            <Link href="#services" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
+              Services
             </Link>
-          </div>
+            <Link href="#process" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
+              Process
+            </Link>
+            <Link href="#benefits" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
+              Benefits
+            </Link>
+            <Link href="#pricing" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
+              Pricing
+            </Link>
+            <Link
+              href="#testimonials"
+              className="text-sm font-medium hover:underline underline-offset-4"
+              prefetch={false}
+            >
+              Testimonials
+            </Link>
+            <Link href="#contact" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
+              Contact
+            </Link>
+          </nav>
+          <ThemeToggle />
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          {/* Animated Construction Icon */}
-          <div className="relative mx-auto w-32 h-32 mb-8">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full animate-spin-slow opacity-20"></div>
-            <div className="absolute inset-2 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full animate-pulse"></div>
-            <div className="absolute inset-4 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center">
-              <div className="relative">
-                <Bug className="h-12 w-12 text-blue-600 animate-bounce" />
-                <div className="absolute -top-2 -right-2 w-6 h-6">
-                  <div className="w-full h-full bg-yellow-400 rounded-full animate-ping"></div>
-                  <div className="absolute inset-1 bg-yellow-500 rounded-full"></div>
-                </div>
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="relative w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-r from-primary to-secondary text-white overflow-hidden">
+          <Image
+            src="/placeholder.jpg?height=1080&width=1920&query=abstract%20tech%20background"
+            alt="Hero Background"
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+            className="absolute inset-0 z-0 opacity-30"
+          />
+          <div className="container relative z-10 px-4 md:px-6 text-center">
+            <div className="space-y-4">
+              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl animate-fade-in">
+                DovoQA: Your Partner in Quality Assurance
+              </h1>
+              <p className="mx-auto max-w-[700px] text-lg md:text-xl animate-slide-up delay-200">
+                Unlocking Flawless Software, Predictably.
+              </p>
+              <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center animate-slide-up delay-400">
+                <Link href="#contact" passHref>
+                  <Button className="inline-flex h-10 items-center justify-center rounded-md bg-white text-primary px-8 text-sm font-medium shadow transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+                    Get a Free Consultation
+                  </Button>
+                </Link>
+                <Link href="#services" passHref>
+                  <Button
+                    variant="outline"
+                    className="inline-flex h-10 items-center justify-center rounded-md border border-white bg-transparent text-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-white hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                  >
+                    Learn More
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
+        </section>
 
-          {/* Main Heading */}
-          <div className="space-y-4">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-800 bg-clip-text text-transparent animate-fade-in">
-              We're Building Something Amazing
-            </h1>
-            <div className="flex items-center justify-center gap-2 text-lg md:text-xl text-muted-foreground">
-              <span className="animate-typing font-medium">Quality Assurance as a Service</span>
-              <div className="w-0.5 h-6 bg-blue-600 animate-blink"></div>
+        {/* Our Services Section */}
+        <section id="services" className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900 animate-fade-in">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">Our Services</h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                  We offer a comprehensive suite of QA services to ensure your software is robust, reliable, and ready
+                  for market.
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl items-start gap-6 py-12 lg:grid-cols-3 lg:gap-12">
+              <Card className="flex flex-col items-center p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up">
+                <CardHeader>
+                  <Lightbulb className="h-12 w-12 text-primary mb-4" />
+                  <CardTitle className="text-xl font-semibold">Functional Testing</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Ensuring every feature works as intended, meeting all specified requirements.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up delay-100">
+                <CardHeader>
+                  <Rocket className="h-12 w-12 text-primary mb-4" />
+                  <CardTitle className="text-xl font-semibold">Performance Testing</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Evaluating system responsiveness and stability under various workloads.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up delay-200">
+                <CardHeader>
+                  <Shield className="h-12 w-12 text-primary mb-4" />
+                  <CardTitle className="text-xl font-semibold">Security Testing</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Identifying vulnerabilities and ensuring your application is protected against threats.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up delay-300">
+                <CardHeader>
+                  <Code className="h-12 w-12 text-primary mb-4" />
+                  <CardTitle className="text-xl font-semibold">Automation Testing</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Automating repetitive test cases for faster feedback and increased efficiency.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up delay-400">
+                <CardHeader>
+                  <MessageCircle className="h-12 w-12 text-primary mb-4" />
+                  <CardTitle className="text-xl font-semibold">Usability Testing</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Ensuring an intuitive and satisfying user experience for your target audience.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up delay-500">
+                <CardHeader>
+                  <TrendingUp className="h-12 w-12 text-primary mb-4" />
+                  <CardTitle className="text-xl font-semibold">QA Consulting</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Strategic guidance to optimize your QA processes and achieve higher quality standards.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
+        </section>
 
-          {/* Description */}
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed animate-slide-up font-light">
-            Our team is working hard to bring you the best QA services for your software development needs. We'll be
-            launching soon with comprehensive testing solutions that will elevate your software quality.
-          </p>
-
-          {/* Progress Bar */}
-          <div className="max-w-md mx-auto">
-            <div className="flex justify-between text-sm text-muted-foreground mb-2 font-medium">
-              <span>Progress</span>
-              <span>85%</span>
+        {/* Our Process Section */}
+        <section id="process" className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-800 animate-fade-in">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
+                  Our Streamlined Process
+                </h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                  We follow a clear and collaborative process to ensure seamless integration and effective QA delivery.
+                </p>
+              </div>
             </div>
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full animate-progress-bar"></div>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 lg:grid-cols-3 lg:gap-12">
+              <Card className="flex flex-col items-center p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up">
+                <CardHeader>
+                  <span className="text-5xl font-bold text-secondary mb-4">1</span>
+                  <CardTitle className="text-xl font-semibold">Discovery & Planning</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    We start by understanding your project, goals, and existing processes to tailor our QA strategy.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up delay-100">
+                <CardHeader>
+                  <span className="text-5xl font-bold text-secondary mb-4">2</span>
+                  <CardTitle className="text-xl font-semibold">Execution & Testing</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Our expert QA engineers execute test plans, identify defects, and provide detailed reports.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col items-center p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up delay-200">
+                <CardHeader>
+                  <span className="text-5xl font-bold text-secondary mb-4">3</span>
+                  <CardTitle className="text-xl font-semibold">Continuous Improvement</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    We continuously optimize our processes and adapt to your evolving needs for ongoing quality.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
+        </section>
 
-          {/* Coming Soon Badge */}
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-200 dark:border-blue-800 rounded-full">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-sm font-medium text-blue-700 dark:text-blue-300">Launching Soon - Stay Tuned!</span>
+        {/* Benefits Section */}
+        <section id="benefits" className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900 animate-fade-in">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">Why Choose DovoQA?</h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                  Experience the DovoQA difference with unparalleled advantages for your business.
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 lg:grid-cols-2 lg:gap-12">
+              <div className="grid gap-1 animate-slide-up">
+                <h3 className="text-xl font-bold flex items-center gap-2 text-secondary">
+                  <DollarSign className="h-6 w-6" /> Predictable Flat-Rate Pricing
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Eliminate budget surprises with our annual flat-rate model. Get comprehensive QA coverage without
+                  worrying about hourly rates or resource fluctuations.
+                </p>
+              </div>
+              <div className="grid gap-1 animate-slide-up delay-100">
+                <h3 className="text-xl font-bold flex items-center gap-2 text-secondary">
+                  <Users className="h-6 w-6" /> Virtually Unlimited Resources
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Our flexible team scales with your project needs, providing the right expertise at every stage,
+                  ensuring seamless QA support without impacting your fixed billing.
+                </p>
+              </div>
+              <div className="grid gap-1 animate-slide-up delay-200">
+                <h3 className="text-xl font-bold flex items-center gap-2 text-secondary">
+                  <Zap className="h-6 w-6" /> Faster Time-to-Market
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Streamlined QA processes and dedicated teams accelerate your development cycle, helping you launch
+                  high-quality products faster.
+                </p>
+              </div>
+              <div className="grid gap-1 animate-slide-up delay-300">
+                <h3 className="text-xl font-bold flex items-center gap-2 text-secondary">
+                  <Award className="h-6 w-6" /> Enhanced Product Quality
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Our rigorous testing methodologies and experienced professionals ensure your software is robust,
+                  reliable, and delivers an exceptional user experience.
+                </p>
+              </div>
+            </div>
           </div>
+        </section>
 
-          {/* Floating Elements */}
-          <div className="absolute top-20 left-10 w-4 h-4 bg-blue-400 rounded-full animate-float opacity-60"></div>
-          <div className="absolute top-40 right-20 w-6 h-6 bg-indigo-400 rounded-full animate-float-delayed opacity-40"></div>
-          <div className="absolute bottom-40 left-20 w-3 h-3 bg-purple-400 rounded-full animate-float opacity-50"></div>
-          <div className="absolute bottom-60 right-10 w-5 h-5 bg-blue-500 rounded-full animate-float-delayed opacity-30"></div>
-        </div>
+        {/* Pricing Section */}
+        <section id="pricing" className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-800">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">Our Flat-Rate Pricing</h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                  Experience predictable costs with our transparent annual flat-rate model. No surprises, just quality.
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-md items-start gap-8 py-12 lg:max-w-5xl lg:grid-cols-2">
+              <Card className="flex flex-col justify-between p-6 shadow-lg border-t-4 border-primary">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold text-primary">Annual QA Partnership</CardTitle>
+                  <p className="text-gray-500 dark:text-gray-400">Comprehensive QA as a Service</p>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="text-4xl font-bold text-gray-900 dark:text-gray-50">
+                    Custom Quote
+                    <span className="text-lg font-normal text-gray-500 dark:text-gray-400">/year</span>
+                  </div>
+                  <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-5 w-5 text-secondary" />
+                      <span>Flat-rate annual billing</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-5 w-5 text-secondary" />
+                      <span>Virtually unlimited resources</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-5 w-5 text-secondary" />
+                      <span>Adaptability to project stages</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-5 w-5 text-secondary" />
+                      <span>Dedicated QA team</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-5 w-5 text-secondary" />
+                      <span>Full suite of QA services</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-5 w-5 text-secondary" />
+                      <span>Continuous quality assurance</span>
+                    </li>
+                  </ul>
+                  <Button className="w-full bg-primary text-white hover:bg-primary/90">Request a Custom Quote</Button>
+                </CardContent>
+              </Card>
+              <Card className="flex flex-col justify-between p-6 shadow-lg border-t-4 border-secondary">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold text-secondary">Why Flat Rate?</CardTitle>
+                  <p className="text-gray-500 dark:text-gray-400">Our unique value proposition</p>
+                </CardHeader>
+                <CardContent className="space-y-4 text-gray-700 dark:text-gray-300">
+                  <p>
+                    At DovoQA, we believe in transparency and predictability. Our flat-rate model eliminates the common
+                    headaches associated with hourly billing or fluctuating resource needs.
+                  </p>
+                  <p>
+                    You get a fixed annual cost, no matter how much time or how many resources your project requires
+                    throughout the year. This allows you to budget effectively and focus on your core business, knowing
+                    your QA is covered.
+                  </p>
+                  <p>
+                    We adapt our resources to your project's different stages, ensuring optimal support without any
+                    changes to your agreed-upon billing. This is QA as a Service, simplified.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section
+          id="testimonials"
+          className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900 animate-fade-in"
+        >
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">What Our Clients Say</h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                  Hear from businesses that have experienced the DovoQA difference.
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 lg:grid-cols-2 lg:gap-12">
+              <Card className="p-6 shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up">
+                <CardContent className="space-y-4">
+                  <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+                    &quot;DovoQA transformed our QA process. The flat-rate model is a game-changer, providing incredible
+                    value and predictability. Their team is highly skilled and adaptable.&quot;
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <Image
+                      src="/placeholder-user.jpg?height=64&width=64&query=happy%20business%20person"
+                      alt="Client Avatar"
+                      width={64}
+                      height={64}
+                      className="rounded-full object-cover"
+                    />
+                    <div>
+                      <p className="font-semibold text-gray-900 dark:text-gray-50">Jane Doe</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">CTO, Tech Innovators Inc.</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="p-6 shadow-md hover:shadow-lg transition-shadow duration-300 animate-slide-up delay-100">
+                <CardContent className="space-y-4">
+                  <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+                    &quot;The flexibility and unlimited resources from DovoQA allowed us to scale our testing efforts
+                    without any budget surprises. Truly a partner in quality!&quot;
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <Image
+                      src="/placeholder-user.jpg?height=64&width=64&query=smiling%20professional"
+                      alt="Client Avatar"
+                      width={64}
+                      height={64}
+                      className="rounded-full object-cover"
+                    />
+                    <div>
+                      <p className="font-semibold text-gray-900 dark:text-gray-50">John Smith</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Product Manager, Global Solutions</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-800">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">Get in Touch</h2>
+                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                  Have questions or ready to start your QA journey with DovoQA? Contact us today!
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 lg:grid-cols-2 lg:gap-12">
+              <div className="flex flex-col space-y-4">
+                <div className="flex items-center gap-4">
+                  <Mail className="h-6 w-6 text-primary" />
+                  <div>
+                    <h3 className="font-semibold">Email</h3>
+                    <p className="text-gray-500 dark:text-gray-400">info@dovoqa.com</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <Phone className="h-6 w-6 text-primary" />
+                  <div>
+                    <h3 className="font-semibold">Phone</h3>
+                    <p className="text-gray-500 dark:text-gray-400">+1 (555) 123-4567</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <MapPin className="h-6 w-6 text-primary" />
+                  <div>
+                    <h3 className="font-semibold">Address</h3>
+                    <p className="text-gray-500 dark:text-gray-400">123 QA Lane, Suite 100, Quality City, QC 90210</p>
+                  </div>
+                </div>
+                <WhatsAppIcon
+                  phoneNumber="+15551234567"
+                  message="Hello DovoQA, I'd like to inquire about your services."
+                />
+              </div>
+              <Card className="p-6 shadow-md">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="name">Name</Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      placeholder="Your Name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      placeholder="your@example.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="message">Message</Label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      placeholder="Your message here..."
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    className="w-full bg-primary text-white hover:bg-primary/90"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Sending..." : "Send Message"}
+                  </Button>
+                </form>
+              </Card>
+            </div>
+          </div>
+        </section>
       </main>
 
-      {/* Contact Section */}
-      <section
-        id="contact"
-        className="bg-gradient-to-br from-indigo-50/50 via-blue-50/30 to-purple-50/50 dark:from-indigo-900/20 dark:via-blue-900/10 dark:to-purple-900/20 backdrop-blur-sm border-t py-12"
-      >
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center space-y-8">
-            <div className="animate-fade-in-up">
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 bg-clip-text text-transparent">
-                Get in Touch
-              </h2>
-              <p className="text-muted-foreground font-light">
-                Have questions or want to be notified when we launch? We'd love to hear from you!
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {/* Email Contact - Now triggers modal */}
-              <EmailModalForm />
-
-              <div className="flex flex-col items-center space-y-3 p-6 rounded-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-green-200/50 dark:border-green-800/50 hover:shadow-lg transition-all duration-300 hover:scale-105 animate-slide-in-up delay-200">
-                <div className="p-3 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-full animate-pulse-slow">
-                  <WhatsAppIcon className="h-6 w-6 text-green-600" />
-                </div>
-                <div className="text-center">
-                  <p className="font-semibold text-green-800 dark:text-green-200">WhatsApp</p>
-                  <a
-                    href="https://wa.me/5491132346592"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground hover:text-green-600 transition-colors font-light"
-                  >
-                    +54 9 11 3234 6592
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex flex-col items-center space-y-3 p-6 rounded-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-purple-200/50 dark:border-purple-800/50 hover:shadow-lg transition-all duration-300 hover:scale-105 animate-slide-in-up delay-300">
-                <div className="p-3 bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 rounded-full animate-pulse-slow">
-                  <MapPin className="h-6 w-6 text-purple-600" />
-                </div>
-                <div className="text-center">
-                  <p className="font-semibold text-purple-800 dark:text-purple-200">Location</p>
-                  <p className="text-sm text-muted-foreground font-light">
-                    CABA, Buenos Aires
-                    <br />
-                    Argentina
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-6 animate-fade-in-up delay-400">
-              <Button
-                size="lg"
-                className="px-8 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-300 shadow-lg font-medium"
-              >
-                <Mail className="mr-2 h-4 w-4" />
-                Contact Us Now
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer className="border-t bg-white/30 dark:bg-gray-900/30 backdrop-blur-sm py-6">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <Bug className="h-5 w-5 text-primary" />
-              <span className="font-semibold tracking-tight">dovoqa.com</span>
-              <span className="text-sm text-muted-foreground font-light">- Coming Soon</span>
-            </div>
-            <p className="text-sm text-muted-foreground font-light">
-              © {new Date().getFullYear()} Dovoqa. All rights reserved.
-            </p>
-          </div>
-        </div>
+      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t bg-background">
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          &copy; {new Date().getFullYear()} DovoQA. All rights reserved.
+        </p>
+        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+          <Link href="#services" className="text-xs hover:underline underline-offset-4" prefetch={false}>
+            Services
+          </Link>
+          <Link href="#pricing" className="text-xs hover:underline underline-offset-4" prefetch={false}>
+            Pricing
+          </Link>
+          <Link href="#contact" className="text-xs hover:underline underline-offset-4" prefetch={false}>
+            Contact
+          </Link>
+        </nav>
       </footer>
     </div>
   )

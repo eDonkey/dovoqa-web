@@ -1,33 +1,40 @@
 import type React from "react"
-import "@/app/globals.css"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Outfit } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next" // Import Vercel Analytics
-import { Suspense } from "react" // Import Suspense
+import { Analytics } from "@vercel/analytics/next"
+import { Suspense } from "react"
 
-const outfit = Outfit({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-outfit",
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-})
+const inter = Inter({ subsets: ["latin"] })
 
-export const metadata = {
-  title: "Dovoqa - QA as a Service for Software Development",
-  description: "Elevate your software quality with our expert QA services. We find the bugs before your users do.",
-  keywords:
-    "QA as a Service, software quality assurance, automated testing, performance testing, security testing, software testing company, dovoqa, quality control, software development",
+export const metadata: Metadata = {
+  metadataBase: new URL("https://webmailer.dovoqa.com"),
+  title: "DovoQA - QA as a Service | Flat Rate, Unlimited Resources",
+  description:
+    "DovoQA offers comprehensive QA as a Service with predictable flat-rate pricing and virtually unlimited resources, adapting to your project's needs without changing your billing.",
+  keywords: [
+    "QA as a Service",
+    "Quality Assurance",
+    "Flat Rate QA",
+    "Unlimited QA Resources",
+    "Software Testing",
+    "DovoQA",
+    "Predictable QA Costs",
+    "Flexible QA",
+  ],
   openGraph: {
-    title: "Dovoqa - QA as a Service for Software Development",
-    description: "Elevate your software quality with our expert QA services. We find the bugs before your users do.",
-    url: "https://webmailer.dovoqa.com", // IMPORTANT: Replace with your actual primary domain
-    siteName: "Dovoqa",
+    title: "DovoQA - QA as a Service | Flat Rate, Unlimited Resources",
+    description:
+      "DovoQA offers comprehensive QA as a Service with predictable flat-rate pricing and virtually unlimited resources, adapting to your project's needs without changing your billing.",
+    url: "https://webmailer.dovoqa.com",
+    siteName: "DovoQA",
     images: [
       {
-        url: "/placeholder.svg?height=630&width=1200", // Replace with your actual Open Graph image
+        url: "/placeholder.svg?height=630&width=1200",
         width: 1200,
         height: 630,
-        alt: "Dovoqa - Quality Assurance as a Service",
+        alt: "DovoQA Logo",
       },
     ],
     locale: "en_US",
@@ -35,53 +42,27 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dovoqa - QA as a Service for Software Development",
-    description: "Elevate your software quality with our expert QA services. We find the bugs before your users do.",
-    creator: "@dovoqa_qa", // IMPORTANT: Replace with your actual Twitter handle
-    images: ["/placeholder.svg?height=630&width=1200"], // Replace with your actual Twitter image
+    title: "DovoQA - QA as a Service | Flat Rate, Unlimited Resources",
+    description:
+      "DovoQA offers comprehensive QA as a Service with predictable flat-rate pricing and virtually unlimited resources, adapting to your project's needs without changing your billing.",
+    images: ["/placeholder.svg?height=675&width=1200"],
+    creator: "@DovoQA", // Replace with actual Twitter handle if available
   },
-  generator: "v0.dev",
+    generator: 'v0.dev'
 }
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
-    <html lang="en" suppressHydrationWarning className={outfit.variable}>
-      <head>
-        {/* Schema Markup for Organization */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Dovoqa",
-              url: "https://webmailer.dovoqa.com", // IMPORTANT: Replace with your actual primary domain
-              logo: "/placeholder.svg?height=60&width=60", // Replace with your actual logo URL
-              contactPoint: {
-                "@type": "ContactPoint",
-                telephone: "+54-9-11-3234-6592", // Your WhatsApp number
-                contactType: "customer service",
-                email: "hello@dovoqa.com",
-              },
-              sameAs: [
-                "https://www.linkedin.com/company/dovoqa", // IMPORTANT: Replace with your actual LinkedIn URL
-                // Add other social media profiles here
-              ],
-            }),
-          }}
-        />
-      </head>
-      <body>
-        <Suspense fallback={null}>
-          {" "}
-          {/* Wrap with Suspense */}
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <Suspense>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             {children}
-            <Analytics /> {/* Vercel Analytics Component */}
+            <Analytics />
           </ThemeProvider>
         </Suspense>
       </body>
