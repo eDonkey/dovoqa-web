@@ -17,19 +17,13 @@ export default function DovoqaBrochureEs() {
         <nav>
           <ul className="flex space-x-6">
             <li>
-              <a href="#services" className="text-lg font-medium hover:text-primary transition-colors">
-                Servicios
-              </a>
+              
             </li>
             <li>
-              <a href="#benefits" className="text-lg font-medium hover:text-primary transition-colors">
-                Beneficios
-              </a>
+              
             </li>
             <li>
-              <a href="#contact" className="text-lg font-medium hover:text-primary transition-colors">
-                Contacto
-              </a>
+              
             </li>
           </ul>
         </nav>
