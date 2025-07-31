@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardTitle } from "@/components/ui/card"
 import { Mail, Phone, MapPin, CheckCircle, Lightbulb, Users, DollarSign, Clock, Award, Star } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { ContactForm } from "@/components/contact-form"
@@ -80,18 +80,11 @@ export default function Home() {
             <Link className="font-medium hover:underline underline-offset-4" href="#benefits">
               Benefits
             </Link>
-            <Link className="font-medium hover:underline underline-offset-4" href="#pricing">
-              Pricing
-            </Link>
+            {/* Pricing link removed */}
             <Link className="font-medium hover:underline underline-offset-4" href="#contact">
               Contact Us
             </Link>
-            <Link className="font-medium hover:underline underline-offset-4" href="/brochure-en">
-              Brochure (EN)
-            </Link>
-            <Link className="font-medium hover:underline underline-offset-4" href="/brochure-es">
-              Brochure (ES)
-            </Link>
+            {/* Brochure links removed */}
           </nav>
           <ThemeToggle />
         </div>
@@ -256,57 +249,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="pricing" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl animate-fade-in-up">
-                  Flat-Rate Pricing
-                </h2>
-                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 animate-fade-in-up delay-200">
-                  Transparent and predictable pricing for all your QA needs.
-                </p>
-              </div>
-            </div>
-            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-1 lg:grid-cols-2">
-              <Card className="flex flex-col p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold mb-2">Basic QA Package</CardTitle>
-                  <p className="text-4xl font-extrabold text-purple-600 mb-4">
-                    $999<span className="text-lg text-gray-500">/month</span>
-                  </p>
-                </CardHeader>
-                <CardContent className="text-gray-600 dark:text-gray-400 space-y-2">
-                  <ul className="list-disc list-inside text-left mx-auto max-w-xs">
-                    <li>Manual Testing (up to 40 hours/month)</li>
-                    <li>Basic Test Case Management</li>
-                    <li>Weekly Progress Reports</li>
-                    <li>Email Support</li>
-                  </ul>
-                  <Button className="mt-6 bg-purple-600 hover:bg-purple-700 text-white">Choose Plan</Button>
-                </CardContent>
-              </Card>
-              <Card className="flex flex-col p-6 text-center bg-white dark:bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-400">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold mb-2">Premium QA Package</CardTitle>
-                  <p className="text-4xl font-extrabold text-purple-600 mb-4">
-                    $1999<span className="text-lg text-gray-500">/month</span>
-                  </p>
-                </CardHeader>
-                <CardContent className="text-gray-600 dark:text-gray-400 space-y-2">
-                  <ul className="list-disc list-inside text-left mx-auto max-w-xs">
-                    <li>Manual & Automation Testing (up to 80 hours/month)</li>
-                    <li>Advanced Test Case Management</li>
-                    <li>Daily Progress Reports</li>
-                    <li>Dedicated QA Lead</li>
-                    <li>Priority Support</li>
-                  </ul>
-                  <Button className="mt-6 bg-purple-600 hover:bg-purple-700 text-white">Choose Plan</Button>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
+        {/* Pricing section removed */}
 
         <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-900">
           <div className="container px-4 md:px-6">

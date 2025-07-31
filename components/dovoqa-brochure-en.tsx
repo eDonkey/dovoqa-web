@@ -1,23 +1,21 @@
 "use client"
 
-import { useRef } from "react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Download } from "lucide-react"
+import { Mail, Phone, MapPin, CheckCircle } from "lucide-react"
+import { useRef } from "react"
 import html2canvas from "html2canvas"
 import jsPDF from "jspdf"
-import Image from "next/image"
 
-export default function DovoqaBrochure({ lang }: { lang: "en" | "es" }) {
+export default function DovoqaBrochureEn() {
   const brochureRef = useRef<HTMLDivElement>(null)
 
-  const handleDownloadPdf = async () => {
+  const downloadPdf = async () => {
     if (brochureRef.current) {
       const canvas = await html2canvas(brochureRef.current, {
         scale: 2, // Increase scale for better resolution
-        useCORS: true, // Allow cross-origin images
-        allowTaint: true, // Allow tainting the canvas
-        scrollX: 0,
-        scrollY: -window.scrollY, // Adjust scroll to capture full content
+        useCORS: true, // Enable CORS for images
+        allowTaint: true, // Allow tainting canvas with cross-origin images
       })
       const imgData = canvas.toDataURL("image/png")
       const pdf = new jsPDF("p", "mm", "a4")
@@ -36,73 +34,180 @@ export default function DovoqaBrochure({ lang }: { lang: "en" | "es" }) {
         pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight)
         heightLeft -= pageHeight
       }
-      pdf.save(`DovoQA_Brochure_${lang.toUpperCase()}.pdf`)
+
+      pdf.save("DovoQA_Brochure_EN.pdf")
     }
   }
 
   return (
-    <div className="flex flex-col items-center p-4">
-      <Button onClick={handleDownloadPdf} className="mb-4">
-        <Download className="mr-2 h-4 w-4" /> Download PDF
-      </Button>
-      <div ref={brochureRef} className="brochure-content p-8 bg-white shadow-lg max-w-4xl mx-auto">
-        <header className="text-center mb-8">
-          <Image
-            src="/placeholder-logo.png" // Assuming this is the DovoQA logo
-            alt="DovoQA Logo"
-            width={150}
-            height={50}
-            className="mx-auto mb-4"
-          />
-          <h1 className="text-4xl font-bold text-gray-800">{lang === "en" ? "DovoQA Services" : "Servicios DovoQA"}</h1>
-          <p className="text-lg text-gray-600">
-            {lang === "en" ? "Your Partner in Quality Assurance" : "Tu Socio en Aseguramiento de Calidad"}
-          </p>
-        </header>
+    <div className="font-sans antialiased bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
+      <div className="flex justify-center p-4 bg-gray-100 dark:bg-gray-800">
+        <Button onClick={downloadPdf} className="bg-primary text-white hover:bg-primary/90">
+          Download Brochure (PDF)
+        </Button>
+      </div>
+      <div ref={brochureRef} className="brochure-content">
+        {/* Cover Page */}
+        <section className="relative h-[297mm] w-[210mm] mx-auto flex flex-col items-center justify-center text-center text-white bg-gradient-to-br from-purple-700 to-indigo-900 p-8 overflow-hidden">
+          <div className="absolute inset-0 opacity-20">
+            <Image
+              src="/placeholder.jpg?query=abstract-geometric-pattern"
+              alt="Background Pattern"
+              layout="fill"
+              objectFit="cover"
+              quality={100}
+            />
+          </div>
+          <div className="relative z-10">
+            <Image src="/images/dovoqa-logo.png" alt="DovoQA Logo" width={150} height={150} className="mx-auto mb-6" />
+            <h1 className="text-6xl font-extrabold leading-tight mb-4">DovoQA</h1>
+            <h2 className="text-3xl font-semibold mb-8">Quality Assurance as a Service</h2>
+            <p className="text-xl max-w-md mx-auto">
+              Your dedicated partner for flawless software delivery, ensuring impeccable quality with unparalleled
+              flexibility and predictable costs.
+            </p>
+          </div>
+        </section>
 
-        <section className="mb-8">
-          <h2 className="text-3xl font-semibold text-gray-700 mb-4">{lang === "en" ? "About Us" : "Sobre Nosotros"}</h2>
-          <p className="text-gray-700 leading-relaxed">
-            {lang === "en"
-              ? "DovoQA is a leading provider of Quality Assurance as a Service (QAaaS), dedicated to ensuring the highest quality of your software products. We offer comprehensive testing solutions tailored to your specific needs, helping you deliver flawless applications to your users."
-              : "DovoQA es un proveedor líder de Aseguramiento de Calidad como Servicio (QAaaS), dedicado a garantizar la máxima calidad de sus productos de software. Ofrecemos soluciones de prueba integrales adaptadas a sus necesidades específicas, ayudándole a entregar aplicaciones impecables a sus usuarios."}
+        {/* Introduction */}
+        <section className="h-[297mm] w-[210mm] mx-auto p-8 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-50 flex flex-col justify-center">
+          <h3 className="text-4xl font-bold text-primary mb-6 text-center">Welcome to DovoQA</h3>
+          <p className="text-lg mb-4">
+            In today's fast-paced digital world, software quality is paramount. Bugs, performance issues, and security
+            vulnerabilities can severely impact user experience, brand reputation, and ultimately, your bottom line.
+            That's where DovoQA comes in.
+          </p>
+          <p className="text-lg mb-4">
+            We are a leading provider of Quality Assurance as a Service (QAaaS), offering comprehensive and flexible QA
+            solutions tailored to your unique development needs. Our mission is to empower your team to deliver robust,
+            reliable, and high-performing software with confidence.
+          </p>
+          <p className="text-lg font-semibold text-primary">
+            Partner with DovoQA and transform your QA process into a strategic advantage.
           </p>
         </section>
 
-        <section className="mb-8">
-          <h2 className="text-3xl font-semibold text-gray-700 mb-4">
-            {lang === "en" ? "Our Services" : "Nuestros Servicios"}
-          </h2>
-          <ul className="list-disc list-inside text-gray-700 space-y-2">
-            <li>{lang === "en" ? "Manual Testing" : "Pruebas Manuales"}</li>
-            <li>{lang === "en" ? "Automation Testing" : "Pruebas de Automatización"}</li>
-            <li>{lang === "en" ? "Performance Testing" : "Pruebas de Rendimiento"}</li>
-            <li>{lang === "en" ? "Security Testing" : "Pruebas de Seguridad"}</li>
-            <li>{lang === "en" ? "Consulting & Strategy" : "Consultoría y Estrategia"}</li>
+        {/* Our Services */}
+        <section className="h-[297mm] w-[210mm] mx-auto p-8 bg-gray-100 dark:bg-gray-850 text-gray-900 dark:text-gray-50 flex flex-col justify-center">
+          <h3 className="text-4xl font-bold text-primary mb-8 text-center">Our Comprehensive QA Services</h3>
+          <div className="grid grid-cols-1 gap-6">
+            <div>
+              <h4 className="text-2xl font-semibold text-secondary mb-2">Functional Testing</h4>
+              <p className="text-lg text-gray-700 dark:text-gray-300">
+                Ensuring every feature works exactly as intended, meeting all specified requirements and user
+                expectations.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-2xl font-semibold text-secondary mb-2">Performance Testing</h4>
+              <p className="text-lg text-gray-700 dark:text-gray-300">
+                Verifying application responsiveness, stability, and scalability under various load conditions to ensure
+                optimal user experience.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-2xl font-semibold text-secondary mb-2">Automation Testing</h4>
+              <p className="text-lg text-gray-700 dark:text-gray-300">
+                Developing robust automated test suites for faster, more efficient regression cycles, reducing manual
+                effort and accelerating time-to-market.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-2xl font-semibold text-secondary mb-2">Security Testing</h4>
+              <p className="text-lg text-gray-700 dark:text-gray-300">
+                Identifying vulnerabilities and protecting your software from potential threats and malicious attacks.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-2xl font-semibold text-secondary mb-2">Usability Testing</h4>
+              <p className="text-lg text-gray-700 dark:text-gray-300">
+                Evaluating user-friendliness and overall user experience to ensure intuitive and accessible interfaces.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-2xl font-semibold text-secondary mb-2">Consulting & Strategy</h4>
+              <p className="text-lg text-gray-700 dark:text-gray-300">
+                Providing expert guidance and strategic planning for your QA initiatives, from test plan development to
+                tool selection.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Why Choose DovoQA? */}
+        <section className="h-[297mm] w-[210mm] mx-auto p-8 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-50 flex flex-col justify-center">
+          <h3 className="text-4xl font-bold text-primary mb-8 text-center">Why Choose DovoQA?</h3>
+          <ul className="list-none space-y-6 text-lg">
+            <li className="flex items-start">
+              <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
+              <div>
+                <span className="font-semibold">Flat-Rate Annual Fee:</span> Enjoy complete budget predictability with
+                our unique flat-rate model, eliminating surprises regardless of time or resources needed.
+              </div>
+            </li>
+            <li className="flex items-start">
+              <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
+              <div>
+                <span className="font-semibold">Scalability & Flexibility:</span> Our resources adapt seamlessly to your
+                project's demands, scaling up or down without affecting your billing.
+              </div>
+            </li>
+            <li className="flex items-start">
+              <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
+              <div>
+                <span className="font-semibold">Expertise On-Demand:</span> Access a team of seasoned QA professionals
+                without the overhead of in-house hiring.
+              </div>
+            </li>
+            <li className="flex items-start">
+              <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
+              <div>
+                <span className="font-semibold">Faster Time-to-Market:</span> Streamlined QA processes and efficient
+                testing accelerate your software delivery cycles.
+              </div>
+            </li>
+            <li className="flex items-start">
+              <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
+              <div>
+                <span className="font-semibold">Enhanced Product Quality:</span> Deliver robust, bug-free software that
+                delights your users and builds trust.
+              </div>
+            </li>
+            <li className="flex items-start">
+              <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
+              <div>
+                <span className="font-semibold">Focus on Core Business:</span> Offload QA complexities to us, allowing
+                your team to focus on innovation and development.
+              </div>
+            </li>
           </ul>
         </section>
 
-        <section className="mb-8">
-          <h2 className="text-3xl font-semibold text-gray-700 mb-4">
-            {lang === "en" ? "Why Choose DovoQA?" : "¿Por Qué Elegir DovoQA?"}
-          </h2>
-          <ul className="list-disc list-inside text-gray-700 space-y-2">
-            <li>{lang === "en" ? "Experienced QA Professionals" : "Profesionales de QA Experimentados"}</li>
-            <li>{lang === "en" ? "Tailored Solutions" : "Soluciones Personalizadas"}</li>
-            <li>{lang === "en" ? "Cost-Effective Services" : "Servicios Rentables"}</li>
-            <li>{lang === "en" ? "Commitment to Quality" : "Compromiso con la Calidad"}</li>
-          </ul>
-        </section>
-
-        <footer className="text-center text-gray-500 text-sm mt-8">
-          <p>
-            {lang === "en"
-              ? "Contact us today for a free consultation!"
-              : "¡Contáctenos hoy para una consulta gratuita!"}
+        {/* Contact Information */}
+        <section className="h-[297mm] w-[210mm] mx-auto flex flex-col items-center justify-center text-center text-white bg-gradient-to-br from-purple-700 to-indigo-900 p-8">
+          <h3 className="text-4xl font-bold mb-8">Get in Touch with DovoQA</h3>
+          <p className="text-xl mb-6 max-w-md">
+            Ready to elevate your software quality? Contact us today for a free consultation.
           </p>
-          <p>info@dovoqa.com</p>
-          <p>www.dovoqa.com</p>
-        </footer>
+          <div className="space-y-4 text-lg">
+            <p className="flex items-center justify-center space-x-3">
+              <Mail className="h-6 w-6" />
+              <span>hello@dovoqa.com</span>
+            </p>
+            <p className="flex items-center justify-center space-x-3">
+              <Phone className="h-6 w-6" />
+              <span>+54-9-11-3234-6592</span>
+            </p>
+            <p className="flex items-center justify-center space-x-3">
+              <MapPin className="h-6 w-6" />
+              <span>Remote - Global Reach</span>
+            </p>
+          </div>
+          <div className="mt-10">
+            <Image src="/images/dovoqa-logo.png" alt="DovoQA Logo" width={100} height={100} />
+          </div>
+          <p className="text-sm mt-4 opacity-80">© {new Date().getFullYear()} DovoQA. All rights reserved.</p>
+        </section>
       </div>
     </div>
   )
