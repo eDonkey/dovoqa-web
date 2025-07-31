@@ -26,11 +26,11 @@ const config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(185 70% 30%)", // Deep Teal
+          DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "hsl(120 60% 40%)", // Vibrant Green
+          DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
@@ -68,10 +68,68 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        "slide-up": {
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        "spin-slow": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        "pulse-slow": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: ".5" },
+        },
+        typing: {
+          "0%": { width: "0" },
+          "100%": { width: "100%" },
+        },
+        blink: {
+          "0%, 100%": { "border-right-color": "transparent" },
+          "50%": { "border-right-color": "currentColor" },
+        },
+        "progress-bar": {
+          "0%": { width: "0%" },
+          "100%": { width: "85%" }, // Matches the 85% progress
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0) translateX(0)" },
+          "25%": { transform: "translateY(-10px) translateX(5px)" },
+          "50%": { transform: "translateY(0) translateX(0)" },
+          "75%": { transform: "translateY(10px) translateX(-5px)" },
+        },
+        "float-delayed": {
+          "0%, 100%": { transform: "translateY(0) translateX(0)" },
+          "25%": { transform: "translateY(10px) translateX(-5px)" },
+          "50%": { transform: "translateY(0) translateX(0)" },
+          "75%": { transform: "translateY(-10px) translateX(5px)" },
+        },
+        "fade-in-up": {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "slide-in-up": {
+          "0%": { transform: "translateY(50px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 1s ease-out forwards",
+        "slide-up": "slide-up 0.8s ease-out forwards",
+        "spin-slow": "spin-slow 8s linear infinite",
+        "pulse-slow": "pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        typing: "typing 3.5s steps(40, end), blink .75s step-end infinite",
+        "progress-bar": "progress-bar 2s ease-out forwards",
+        float: "float 6s ease-in-out infinite",
+        "float-delayed": "float-delayed 6s ease-in-out infinite 1s",
+        "fade-in-up": "fade-in-up 1s ease-out forwards",
+        "slide-in-up": "slide-in-up 0.8s ease-out forwards",
       },
     },
   },
